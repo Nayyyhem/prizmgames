@@ -1,3 +1,6 @@
+# Google AdMob
+google.com, pub-8027988168315308, DIRECT, f08c47fec0942fa0
+
 # Unity
 ImproveDigital, 2343, RESELLER
 rubiconproject.com, 26386, RESELLER, 0bfd66d529a55807
