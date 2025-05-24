@@ -799,6 +799,46 @@ zeta.com,998,RESELLER
 zoomd.com,88478941,RESELLER
 
 # Mintegral
+contextweb.com, 562794, RESELLER, 89ff185a4c4e857c
+singularads.com, 548745, RESELLER
+contextweb.com, 562911, RESELLER, 89ff185a4c4e857c
+contextweb.com, 563462, RESELLER, 89ff185a4c4e857c
+openx.com, 561446248, RESELLER, 6a698e2ec38604c6
+appnexus.com, 1019, RESELLER, f5ab79cb980f11d1
+video.unrulymedia.com, 2444764291, RESELLER
+pubmatic.com, 156212, RESELLER, 5d62403b186f2ace
+contextweb.com, 558511, RESELLER, 89ff185a4c4e857c
+opera.com, pub10014056052800, RESELLER, 55a0c5fd61378de3
+motorik.io, 100463, RESELLER
+eskimi.com, 2020000810, RESELLER
+openx.com, 561365249, RESELLER, 6a698e2ec38604c6
+media.net, 8CU5L226O, RESELLER
+smaato.com, 1100057546, DIRECT, 07bcf65f187117b4
+adform.com, 1762, RESELLER
+smartadserver.com, 3627, RESELLER, 060d053dcf45cbf3
+sharethrough.com, 4762, RESELLER, d53b998a7bd4ecd2
+sharethrough.com, 5026, RESELLER, d53b998a7bd4ecd2
+appnexus.com, 17044, RESELLER
+xandr.com, 17044, RESELLER
+adyoulike.com, 76375ac0f5abb5a550c87326b9063b59, RESELLER
+adyoulike.com, 5e09d5fe0d58941e6adc167159cc9218, RESELLER
+sonobi.com, cddceeb06e, RESELLER, d1a215d9eb5aee9e
+media.net, 8CU76268D, RESELLER
+yieldmo.com, 3761877318507634863, RESELLER, 6a92c77cfc3d2258
+smaato.com, 1100058954, RESELLER, 07bcf65f187117b4
+openx.com, 562174952, RESELLER, 6a698e2ec38604c6
+rubiconproject.com, 27130, RESELLER, 0bfd66d529a55807
+pubeasy.io, 110039, RESELLER
+video.unrulymedia.com, 476748946, RESELLER
+appnexus.com, 17417, RESELLER, f5ab79cb980f11d1
+xandr.com, 17417, RESELLER, f5ab79cb980f11d1
+showheroes.com, 6037, RESELLER
+unrulymedia.com, 476748946, RESELLER
+bidmachine.io, 1065, RESELLER
+bidmachine.io, 1064, RESELLER
+video.unrulymedia.com, 475093422, RESELLER
+triplelift.com, 13907, RESELLER, 6c33edb13117fd86
+sharethrough.com, veuioj8F, RESELLER, d53b998a7bd4ecd2
 indexexchange.com, 194974, RESELLER, 50b1c356f2c5c8fc
 appnexus.com, 12941, RESELLER, f5ab79cb980f11d1
 appnexus.com, 12752, RESELLER, f5ab79cb980f11d1
