@@ -1,3 +1,5 @@
+OWNERDOMAIN=prizmgames.net
+
 # Google AdMob
 google.com, pub-4337089070156849, DIRECT, f08c47fec0942fa0
 
