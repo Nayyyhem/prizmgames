@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UI Shapes Manual</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --fg: #1f2430;
+    --muted: #5c6672;
+    --accent: #6d4aff;
+    --accent-soft: #efeaff;
+    --border: #e6e8ec;
+    --code-bg: #f5f6f8;
+    --code-fg: #383d48;
+    --note-bg: #f2f6ff;
+    --note-border: #4a86ff;
+    --tip-bg: #f0faf3;
+    --tip-border: #35b46a;
+    --warn-bg: #fff7ec;
+    --warn-border: #e8973a;
+    --table-stripe: #fafbfc;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #16181d;
+      --fg: #d9dde3;
+      --muted: #949ca8;
+      --accent: #a58bff;
+      --accent-soft: #262036;
+      --border: #2a2e37;
+      --code-bg: #1e2128;
+      --code-fg: #cdd3dc;
+      --note-bg: #172233;
+      --note-border: #4a86ff;
+      --tip-bg: #142519;
+      --tip-border: #35b46a;
+      --warn-bg: #2a2013;
+      --warn-border: #e8973a;
+      --table-stripe: #1b1e24;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 17px;
+    line-height: 1.65;
+  }
+  .wrap { max-width: 840px; margin: 0 auto; padding: 3rem 1.4rem 5rem; }
+  header.doc { border-bottom: 1px solid var(--border); padding-bottom: 1.6rem; margin-bottom: 2rem; }
+  header.doc h1 { font-size: 2.5rem; margin: 0 0 .3rem; letter-spacing: -.02em; }
+  header.doc .sub { color: var(--muted); font-size: 1.02rem; }
+  header.doc .sub .badge {
+    display: inline-block; background: var(--accent-soft); color: var(--accent);
+    border-radius: 999px; padding: .1rem .7rem; font-weight: 600; font-size: .85rem;
+    margin-right: .5rem; vertical-align: middle;
+  }
+  .lede { font-size: 1.12rem; color: var(--fg); }
+  h2 {
+    font-size: 1.6rem; margin: 3rem 0 .8rem; padding-top: 1.4rem;
+    border-top: 1px solid var(--border); letter-spacing: -.01em;
+  }
+  h3 { font-size: 1.2rem; margin: 2rem 0 .4rem; color: var(--accent); }
+  h4 { font-size: 1.02rem; margin: 1.4rem 0 .3rem; }
+  p, ul, ol { margin: .7rem 0; }
+  ul, ol { padding-left: 1.4rem; }
+  li { margin: .3rem 0; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  strong { font-weight: 650; }
+  code {
+    background: var(--code-bg); color: var(--code-fg);
+    padding: .12em .4em; border-radius: 5px; font-size: .88em;
+    font-family: "SF Mono", ui-monospace, "Cascadia Code", Menlo, Consolas, monospace;
+  }
+  pre {
+    background: var(--code-bg); color: var(--code-fg);
+    padding: 1rem 1.1rem; border-radius: 10px; overflow-x: auto;
+    border: 1px solid var(--border); font-size: .86rem; line-height: 1.55;
+  }
+  pre code { background: none; padding: 0; font-size: inherit; }
+  .callout {
+    border-left: 4px solid var(--accent); background: var(--note-bg);
+    padding: .8rem 1.1rem; border-radius: 0 8px 8px 0; margin: 1.1rem 0;
+  }
+  .callout.tip { border-color: var(--tip-border); background: var(--tip-bg); }
+  .callout.warn { border-color: var(--warn-border); background: var(--warn-bg); }
+  .callout .tag { font-weight: 700; font-size: .78rem; text-transform: uppercase; letter-spacing: .06em; display: block; margin-bottom: .2rem; }
+  .callout.note .tag { color: var(--note-border); }
+  .callout.tip .tag { color: var(--tip-border); }
+  .callout.warn .tag { color: var(--warn-border); }
+  nav.toc {
+    background: var(--table-stripe); border: 1px solid var(--border);
+    border-radius: 12px; padding: 1.1rem 1.4rem; margin: 2rem 0;
+    columns: 2; column-gap: 2rem;
+  }
+  nav.toc h2 { border: none; padding: 0; margin: 0 0 .6rem; font-size: 1.05rem; column-span: all; }
+  nav.toc ul { list-style: none; padding: 0; margin: 0; }
+  nav.toc li { margin: .18rem 0; break-inside: avoid; }
+  nav.toc a { color: var(--fg); font-size: .95rem; }
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; display: block; overflow-x: auto; }
+  th, td { text-align: left; padding: .5rem .7rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { font-weight: 650; }
+  tbody tr:nth-child(even) { background: var(--table-stripe); }
+  .field { font-weight: 650; color: var(--fg); }
+  footer.doc { margin-top: 4rem; padding-top: 1.4rem; border-top: 1px solid var(--border); color: var(--muted); font-size: .9rem; }
+  @media (max-width: 620px) { nav.toc { columns: 1; } header.doc h1 { font-size: 2rem; } body { font-size: 16px; } }
+  @media print {
+    :root {
+      --bg: #ffffff; --fg: #1f2430; --muted: #5c6672; --accent: #4b2fd6;
+      --border: #d0d4da; --code-bg: #f2f3f5; --code-fg: #333; --table-stripe: #f7f8fa;
+    }
+    body { font-size: 11pt; line-height: 1.5; }
+    .wrap { max-width: none; padding: 0; }
+    a { color: var(--fg); }
+    h2 { page-break-after: avoid; }
+    h3, h4 { page-break-after: avoid; }
+    pre, table, .callout, li { page-break-inside: avoid; }
+    nav.toc { break-inside: avoid; }
+  }
+</style>
+</head>
+</head>
+<body>
+<div class="wrap">
+
+<header class="doc">
+  <h1>UI Shapes</h1>
+  <div class="sub"><span class="badge">v1.0.0</span> Manual · PRIZM GAMES</div>
+</header>
+
+<p class="lede">One component for Unity UI. Add a <code>UIShape</code> to any UI element and you get rounded, octagonal or slanted shapes with fill, gradients, textures, drop shadow, inner shadow, glow, outline, bevel and background blur, plus soft masking, progress wipes and per-state button styling. No sprites, no 9-slices, no render textures. Everything stays crisp at any resolution.</p>
+
+<nav class="toc">
+  <h2>Contents</h2>
+  <ul>
+    <li><a href="#requirements">Requirements</a></li>
+    <li><a href="#quickstart">Quick Start</a></li>
+    <li><a href="#inspector">Using the Inspector</a></li>
+    <li><a href="#shape">Shape</a></li>
+    <li><a href="#skew">Skew</a></li>
+    <li><a href="#common">Common Controls</a></li>
+    <li><a href="#fill">Fill</a></li>
+    <li><a href="#texture">Texture</a></li>
+    <li><a href="#dropshadow">Drop Shadow</a></li>
+    <li><a href="#innershadow">Inner Shadow</a></li>
+    <li><a href="#glow">Glow</a></li>
+    <li><a href="#outline">Outline</a></li>
+    <li><a href="#bevel">Bevel</a></li>
+    <li><a href="#blur">Background Blur</a></li>
+    <li><a href="#progress">Progress</a></li>
+    <li><a href="#masking">Masking</a></li>
+    <li><a href="#clicks">Clicks &amp; Raycasting</a></li>
+    <li><a href="#states">Button States</a></li>
+    <li><a href="#toggles">Toggles</a></li>
+    <li><a href="#styles">Reusable Styles</a></li>
+    <li><a href="#animation">Animation &amp; Scripting</a></li>
+    <li><a href="#performance">Performance &amp; Platforms</a></li>
+    <li><a href="#troubleshooting">Troubleshooting</a></li>
+    <li><a href="#upm">UPM Package</a></li>
+  </ul>
+</nav>
+
+<h2 id="requirements">Requirements</h2>
+<ul>
+  <li>Unity <strong>2022.3 LTS or newer</strong>, and a uGUI Canvas. Nothing else is required.</li>
+  <li><strong>Built-in, URP and HDRP</strong> all supported, and UI looks identical on all three. Background Blur needs a one-time setup step on URP (see its section).</li>
+  <li>Shader Model 3.0+: mobile (GLES 3.0 / Metal / Vulkan), desktop, consoles and VR. OpenGL ES 2.0 is not supported.</li>
+</ul>
+<p><strong>Demo scenes</strong> live in <code>UI Shapes/Demo/</code>, one folder per pipeline, each with a full showcase scene and a Background Blur scene. Open the folder matching your project and delete the others. The labels use TextMeshPro, so import <em>TMP Essentials</em> when Unity offers to. UI Shapes itself has no TMP dependency. Demo scenes from a pipeline you don't use will show pink materials, which is expected.</p>
+
+<h2 id="quickstart">Quick Start</h2>
+<ol>
+  <li>Select a UI GameObject, or create an empty one under your Canvas.</li>
+  <li><strong>Add Component ▸ UI ▸ UI Shape.</strong></li>
+  <li>Tick the effects you want in the inspector and tune them. The component builds and manages everything itself.</li>
+</ol>
+<p>To make it interactive, click <strong>Add Button</strong> or <strong>Add Toggle</strong> next to the <strong>Selectable</strong> field at the top of the inspector. See <a href="#states">Button States</a>.</p>
+<div class="callout tip"><span class="tag">Tip</span>You can also use <code>UIShape</code> as a decorator: leave <strong>Fill</strong> off and put it on (or beside) an existing <code>Image</code> to wrap it in a shadow, glow or outline.</div>
+
+<h2 id="inspector">Using the Inspector</h2>
+<p>Each effect is a collapsible module, styled like Unity's Particle System. <strong>The checkbox in the module header is the on/off switch</strong>, and clicking the bar expands the settings. You can expand a module while it's off to look at its settings; they show read-only until you enable it.</p>
+<p>Most effects share the same handful of controls at the top of their module, described once under <a href="#common">Common Controls</a>. Each effect's own section below lists only the settings specific to it.</p>
+<p>All sizes and distances are in canvas units, and all angles are in degrees.</p>
+
+<h2 id="shape">Shape</h2>
+<table>
+  <thead><tr><th>Field</th><th>What it does</th></tr></thead>
+  <tbody>
+    <tr><td><span class="field">Corner Style</span></td><td><strong>Sharp</strong> (default) is a plain rectangle, and hides the radius controls since they don't apply. <strong>Rounded</strong> gives circular corner arcs. <strong>Octagonal</strong> cuts each corner off as a straight 45° chamfer.</td></tr>
+    <tr><td><span class="field">Border Mode</span></td><td>How the corner radius is shared out. <strong>Uniform</strong> uses one radius for all four corners. <strong>Round</strong> auto-sizes it to half the short side, so squares become circles and long rectangles become pills. <strong>Free</strong> gives a separate radius per corner.</td></tr>
+    <tr><td><span class="field">Corner Radius</span></td><td>The arc radius on Rounded, or the chamfer size on Octagonal. Radii that would overlap along an edge scale down together, the same way CSS <code>border-radius</code> does.</td></tr>
+  </tbody>
+</table>
+<p>Every effect follows the corner style you pick, so fill, outline, shadows, glow and bevel always share one silhouette. Style and radii animate and can be overridden per button state, and Sharp to Rounded transitions collapse the corners smoothly. All three styles cost the same, so pick by looks.</p>
+
+<h2 id="skew">Skew</h2>
+<p>Turn the <strong>Skew</strong> module on to slant the shape like italic text. It's purely visual, so the RectTransform, layout and anchoring don't change, and every effect slants with it, still anti-aliased.</p>
+<table>
+  <thead><tr><th>Field</th><th>What it does</th></tr></thead>
+  <tbody>
+    <tr><td><span class="field">Skew Axis</span></td><td>Horizontal or Vertical.</td></tr>
+    <tr><td><span class="field">Skew Angle</span></td><td>The slant in degrees. 0° is upright.</td></tr>
+    <tr><td><span class="field">Skew Mode</span></td><td><strong>Parallel</strong>: both edges share the angle, giving a parallelogram. This is the classic italic slant, and the default.<br><strong>Mirrored</strong>: the opposite edge takes the negative angle, giving a symmetric trapezoid. Good for banners, ribbons and fake-perspective panels.<br><strong>Custom</strong>: an angle per edge (Left and Right, or Bottom and Top on a vertical skew) for an asymmetric trapezoid.</td></tr>
+  </tbody>
+</table>
+<p>Because the module has its own enable, you can keep an angle set and just switch the slant on and off, including per button state, where the angle fades in and out smoothly.</p>
+<p>A trapezoid narrows as the angle grows and stops on its own before the edges cross, settling into a clean triangle. How steep you can go depends on the element's proportions: a tall element takes a much steeper angle than a short one.</p>
+<p>Soft masks, Background Blur and click detection all follow the slanted outline.</p>
+<div class="callout note"><span class="tag">Limitation</span>Soft masking a <em>skewed</em> shape assumes the mask and its canvas aren't rotated.</div>
+
+<h2 id="common">Common Controls</h2>
+<p>These four settings appear on most effect modules. Each effect section below says which of them it has, then lists its own specific fields.</p>
+<table>
+  <thead><tr><th>Field</th><th>What it does</th></tr></thead>
+  <tbody>
+    <tr><td><span class="field">Color Mode</span></td><td>Whether the effect uses a <strong>Single Color</strong> or a two-colour gradient. See below.</td></tr>
+    <tr><td><span class="field">Opacity</span></td><td>0 to 1, fading that effect alone. Layers on top of the colour's own alpha.</td></tr>
+    <tr><td><span class="field">Blend Mode</span></td><td>How the effect composites over what's beneath it. <strong>Normal</strong> covers, <strong>Additive</strong> brightens (good for glows and bevel highlights), and <strong>Multiply</strong> darkens (good for bevel shadows and tinted overlays).</td></tr>
+    <tr><td><span class="field">Intensity</span></td><td>0.1 to 10, an alpha multiplier. Values above 1 make a soft effect's core denser without making it any bigger, which is the difference between a faint haze and a solid core at the same radius. Only the three soft effects have it.</td></tr>
+  </tbody>
+</table>
+<h3>Gradients</h3>
+<p>Wherever <strong>Color Mode</strong> offers a gradient, the choices are <strong>Vertical</strong> (top to bottom), <strong>Horizontal</strong> (left to right), or <strong>Custom Angle</strong>, which adds an <span class="field">Angle</span> slider (0° puts the end colour on the right, 90° on top). Single Color shows one colour swatch; the gradient modes show a start and an end swatch.</p>
+<p>Both colours carry alpha, so a transparent end colour gives a clean fade-out. Colours blend perceptually, matching Photoshop, Figma and CSS. Gradients are free: same draw call, and they work with masking, the Animator and state transitions, including cross-fading between a single colour and a gradient.</p>
+<div class="callout note"><span class="tag">Note</span>Multiply-blended effects render in a separate draw call from Normal and Additive ones. It's a small cost, and worth it for the classic bevel look, but it's the one blend mode with a performance side.</div>
+
+<h2 id="fill">Fill</h2>
+<p>The shape's interior, as a single colour or a gradient.</p>
+<p><em>Common controls:</em> Color Mode and Opacity. Fill has no blend mode or intensity of its own, since it's the bottom layer everything else composites over. Textures are a separate module, covered next.</p>
+
+<h2 id="texture">Texture</h2>
+<p>An optional sprite drawn on top of the Fill and clipped to the shape's corners, like an Image layered over the fill. Enable it independently of Fill. With no sprite assigned it draws a plain white rect.</p>
+<p><em>Common controls:</em> Blend Mode and Opacity. There's no colour or gradient here, since the sprite supplies the colour.</p>
+<table>
+  <thead><tr><th>Field</th><th>What it does</th></tr></thead>
+  <tbody>
+    <tr><td><span class="field">Texture</span></td><td>The sprite to draw. Leave it empty to draw nothing.</td></tr>
+    <tr><td><span class="field">Texture Fit</span></td><td>How the sprite fits the rect when the aspect ratios don't match. See the table below.</td></tr>
+    <tr><td><span class="field">Pixels Per Unit Multiplier</span></td><td>Constant Size only. Scales the tile's on-screen size, matching <code>Image.pixelsPerUnitMultiplier</code>.</td></tr>
+  </tbody>
+</table>
+<p><span class="field">Texture Fit</span> handles mismatched aspect ratios:</p>
+<table>
+  <thead><tr><th>Mode</th><th>Behaviour</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Stretch</strong> (default)</td><td>Scales to fill, ignoring aspect ratio.</td></tr>
+    <tr><td><strong>Aspect Fit</strong></td><td>Keeps aspect and fits inside the shape. The margin is transparent, like <code>Image.preserveAspect</code>.</td></tr>
+    <tr><td><strong>Aspect Fill</strong></td><td>Keeps aspect, scales up to cover the shape, crops the overflow.</td></tr>
+    <tr><td><strong>Constant Size</strong></td><td>A fixed on-screen texel size, tiled to cover the rect. Needs a non-atlas sprite with <em>Wrap Mode: Repeat</em>, and the inspector warns if the sprite doesn't qualify. The tile size comes from the sprite's <em>Pixels Per Unit</em>, the Canvas's <em>Reference Pixels Per Unit</em>, and the multiplier above.</td></tr>
+  </tbody>
+</table>
+<p>Textures always render upright. They never shear with a skewed shape, though the silhouette still clips them. Every Texture field can be overridden per state and animated, so states can swap the sprite, the fit or the opacity.</p>
+
+<h2 id="dropshadow">Drop Shadow</h2>
+<p>A soft shadow behind the element.</p>
+<p><em>Common controls:</em> Color Mode, Opacity, Blend Mode and Intensity.</p>
+<table>
+  <thead><tr><th>Field</th><th>What it does</th></tr></thead>
+  <tbody>
+    <tr><td><span class="field">Radius</span></td><td>Blur distance.</td></tr>
+    <tr><td><span class="field">Distance</span></td><td>How far the shadow is offset from the shape.</td></tr>
+    <tr><td><span class="field">Angle</span></td><td>Which way it's offset. 0° is right, 90° is up.</td></tr>
+    <tr><td><span class="field">Spread</span></td><td>Grows or shrinks the shadow before blurring.</td></tr>
+  </tbody>
+</table>
+<p>The shadow is cut out of the shape's interior, so a semi-transparent glass panel never shows its own shadow through itself.</p>
+
+<h2 id="innershadow">Inner Shadow</h2>
+<p>A soft shadow drawn inside the shape's edge, for a recessed look. It covers the outer edge completely, so no rim of fill colour peeks through.</p>
+<p><em>Common controls:</em> Color Mode, Opacity, Blend Mode and Intensity.</p>
+<table>
+  <thead><tr><th>Field</th><th>What it does</th></tr></thead>
+  <tbody>
+    <tr><td><span class="field">Radius</span></td><td>Blur distance.</td></tr>
+    <tr><td><span class="field">Distance</span></td><td>How far the shadow is offset inside the shape.</td></tr>
+    <tr><td><span class="field">Angle</span></td><td>Which way it's offset. 0° is right, 90° is up.</td></tr>
+    <tr><td><span class="field">Spread</span></td><td>Positive values thicken the shadow on all sides.</td></tr>
+  </tbody>
+</table>
+
+<h2 id="glow">Glow</h2>
+<p>A halo around the shape, additive by default. It's centred, so unlike the shadows it has no distance or angle, and like the drop shadow it renders only outside the shape.</p>
+<p><em>Common controls:</em> Color Mode, Opacity, Blend Mode and Intensity.</p>
+<table>
+  <thead><tr><th>Field</th><th>What it does</th></tr></thead>
+  <tbody>
+    <tr><td><span class="field">Radius</span></td><td>How far the glow reaches out from the shape.</td></tr>
+    <tr><td><span class="field">Spread</span></td><td>Grows or shrinks the glow before blurring.</td></tr>
+  </tbody>
+</table>
+
+<h2 id="outline">Outline</h2>
+<p>A stroke on the shape's edge.</p>
+<p><em>Common controls:</em> Color Mode, Opacity and Blend Mode. The outline is a hard-edged effect, so it has no intensity.</p>
+<table>
+  <thead><tr><th>Field</th><th>What it does</th></tr></thead>
+  <tbody>
+    <tr><td><span class="field">Placement</span></td><td>Inside, Outside or Centered on the edge.</td></tr>
+    <tr><td><span class="field">Width</span></td><td>Stroke thickness. It stays even on skewed shapes.</td></tr>
+    <tr><td><span class="field">Softness</span></td><td>0 for a crisp stroke, higher to feather it.</td></tr>
+    <tr><td><span class="field">Distance</span></td><td>Pushes the stroke further out, for a detached ring.</td></tr>
+  </tbody>
+</table>
+<p>On a sharp-cornered shape, Outside and Center strokes miter to a point. With a radius, the outer edge grows to radius + width, the way design tools stroke a rounded rectangle.</p>
+<div class="callout note"><span class="tag">Note</span>A <em>soft</em> Outside outline can leave a very faint trace where its falloff crosses the fill's edge. Inside or Center placement avoids it.</div>
+
+<h2 id="bevel">Bevel</h2>
+<p>A Photoshop-style inner bevel: a lit band along the edge, with a highlight on the light-facing side and a shadow opposite, wrapping around rounded corners.</p>
+<p>Bevel has no single colour of its own. Instead the highlight and the shadow each get their own <strong>Color</strong>, <strong>Opacity</strong> and <strong>Blend Mode</strong>, so you can tune the two halves independently. The defaults are additive white and normal black; set the shadow to <em>Multiply</em> for the classic Photoshop look.</p>
+<table>
+  <thead><tr><th>Field</th><th>What it does</th></tr></thead>
+  <tbody>
+    <tr><td><span class="field">Width</span></td><td>The band size.</td></tr>
+    <tr><td><span class="field">Depth</span></td><td>Shading strength.</td></tr>
+    <tr><td><span class="field">Softness</span></td><td>Feathers the band and rounds the corner transitions. 0 gives a crisp chisel with hard miter lines.</td></tr>
+    <tr><td><span class="field">Angle</span></td><td>Light direction. The default 135° is Photoshop's up-left.</td></tr>
+    <tr><td><span class="field">Invert</span></td><td>Flips the lighting so the shape reads as pressed in. Handy for a pressed button state.</td></tr>
+    <tr><td><span class="field">Highlight Color</span><br><span class="field">Highlight Opacity</span><br><span class="field">Highlight Blend Mode</span></td><td>The lit side of the band. Additive white by default.</td></tr>
+    <tr><td><span class="field">Shadow Color</span><br><span class="field">Shadow Opacity</span><br><span class="field">Shadow Blend Mode</span></td><td>The unlit side. Normal black by default.</td></tr>
+  </tbody>
+</table>
+
+<h2 id="blur">Background Blur</h2>
+<p>Frosted glass, blurring whatever is rendered behind the shape. Pair it with a semi-transparent Fill for tinted glass. It's clipped to the shape's corners, respects soft masks, and composes correctly where panels overlap.</p>
+<p>Blur has none of the common controls. Its three settings are its own, and the tint comes from the Fill module underneath.</p>
+<table>
+  <thead><tr><th>Field</th><th>What it does</th></tr></thead>
+  <tbody>
+    <tr><td><span class="field">Radius</span></td><td>Blur strength.</td></tr>
+    <tr><td><span class="field">Blur Opacity</span></td><td>Mixes between the sharp and the blurred background. 1 is fully blurred. This is a mix, not a fade to transparent, so lowering it lets the sharp background show through rather than making the panel see-through.</td></tr>
+    <tr><td><span class="field">Quality</span></td><td>The blur's sample count: High (32 taps), Medium (16) or Low (8). Lower counts cost proportionally less GPU time and stay smooth even at large radii, with the difference showing mostly on busy, high-contrast backdrops. Use Low or Medium on mobile.</td></tr>
+  </tbody>
+</table>
+<h4>Setup Per Pipeline</h4>
+<table>
+  <thead><tr><th>Pipeline</th><th>Setup</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Built-in</strong></td><td>Works out of the box, and is the only pipeline that also blurs UI behind the panel, including elements on the same canvas.</td></tr>
+    <tr><td><strong>URP</strong></td><td>One-time setup: select your URP Renderer asset (under your URP Asset's <em>Renderer List</em>) and add the Renderer Feature <strong>UI Shapes Background Blur Feature</strong>. Until you do, blur panels stay invisible and the inspector shows a reminder. The feature costs nothing on frames with no blur panel, so it's safe to leave installed. Its <span class="field">Capture Resolution</span> (default Half) is your main mobile lever: Half looks all but identical to Full, and Quarter is cheaper still and fine for large radii.</td></tr>
+    <tr><td><strong>HDRP</strong></td><td>No setup. It's handled automatically.</td></tr>
+  </tbody>
+</table>
+<div class="callout note"><span class="tag">URP / HDRP</span>The background is captured once per camera, after post-processing, so a panel blurs the finished world image. But <strong>UI drawn by that camera, and other elements on the same canvas, are not included</strong>. For UI-over-UI blur on URP or HDRP, render the content behind the panel with a separate camera.</div>
+<div class="callout warn"><span class="tag">Performance</span>Background Blur is by far the most expensive effect. On a mobile-class GPU (Switch included), a large panel can cost more GPU time than every other effect combined.<br><br>Your levers, in order of impact: URP's <strong>Capture Resolution</strong>, the per-shape <strong>Quality</strong>, and the panel's on-screen size. Great for menus and dialogs, but budget carefully before putting it on a permanent HUD, and prefer a few large panels over many small ones. Not supported in VR, though every other effect is.</div>
+
+<h2 id="progress">Progress</h2>
+<p>Reveal a fraction of the shape, like an <code>Image</code>'s <em>Fill Amount</em>, for radial timers, linear bars and cooldown sweeps. Off by default; turn the module on with its header checkbox.</p>
+<table>
+  <thead><tr><th>Field</th><th>What it does</th></tr></thead>
+  <tbody>
+    <tr><td><span class="field">Amount</span></td><td>0 to 1, how much shows. This is the value you animate or drive from script (<code>ProgressAmount</code>).</td></tr>
+    <tr><td><span class="field">Method</span></td><td><em>Radial</em> is a 360° sweep (pie or clock). <em>Linear</em> is a straight wipe.</td></tr>
+    <tr><td><span class="field">Origin</span></td><td>Where the fill starts: the edge it grows from on Linear, or the starting angle on Radial.</td></tr>
+    <tr><td><span class="field">Clockwise</span></td><td>Radial only. Reverses direction.</td></tr>
+    <tr><td><span class="field">Targets</span></td><td>Which effects get trimmed: any mix of Fill, Outline, Glow, Drop Shadow, Inner Shadow and Bevel. Unticked effects always draw in full, so you can wipe the Fill while a static Outline frames the whole shape. Background Blur is never trimmed.</td></tr>
+  </tbody>
+</table>
+<p>The wipe has smooth anti-aliased edges, adds no draw calls, and works with masking, the Animator and button states. Gradients, textures and bevels are revealed exactly as far as the Amount.</p>
+
+<h2 id="masking">Masking</h2>
+<p>The <strong>Masking</strong> foldout turns the shape into a mask for its children.</p>
+<table>
+  <thead><tr><th>Mode</th><th>What it does</th></tr></thead>
+  <tbody>
+    <tr><td><strong>None</strong></td><td>No masking.</td></tr>
+    <tr><td><strong>Simple</strong></td><td>Add a Unity <code>Mask</code> component to the same GameObject and keep Fill enabled, and the shape becomes the stencil. Hard edges, clips every descendant.</td></tr>
+    <tr><td><strong>Soft</strong></td><td>Anti-aliased clipping with no stencil and no RenderTexture. Remove any <code>Mask</code> or <code>RectMask2D</code> on the object first, since Soft replaces them. The inspector warns if one is still there.</td></tr>
+  </tbody>
+</table>
+<p><strong>Soft</strong> clips child Images and RawImages, child UI Shapes (fills, shadows, glows and outlines all follow the mask, which is ideal for scroll views of cards), and <strong>TextMeshPro text</strong> when TMP is installed. It also <strong>culls children that scroll fully out of view</strong>, like <code>RectMask2D</code>, so a long list only pays for the rows on screen.</p>
+<p>Soft mode adds two settings that shape the clip area itself. Both take four values, <strong>L</strong>eft, <strong>R</strong>ight, <strong>T</strong>op and <strong>B</strong>ottom, so each side can differ:</p>
+<table>
+  <thead><tr><th>Field</th><th>What it does</th></tr></thead>
+  <tbody>
+    <tr><td><span class="field">Padding</span></td><td>Insets the clip like <code>RectMask2D</code>'s padding. Positive values pull that side inward; negative values push it out so children can spill past the shape. Corner radii are unchanged.</td></tr>
+    <tr><td><span class="field">Softness</span></td><td>Fades the clip out over that distance instead of ending at a hard edge. Top and bottom softness on a scrolling list is the classic use: rows dissolve at the viewport edges with no gradient overlay image. A side left at 0 keeps its crisp edge, and adjacent soft sides meet cleanly in the corner.</td></tr>
+  </tbody>
+</table>
+<p>Both are component-level settings. They're the same for every button state, aren't part of a saved style, and can be driven from script (<code>MaskPadding</code>, <code>MaskSoftness</code>).</p>
+<div class="callout tip"><span class="tag">Which to use?</span><strong>Soft</strong> is the better-looking option and right for the common case: one scrolling list or panel of Images, UI Shapes and text. Use <strong>Simple</strong> for <strong>nested masks</strong> (only one Soft mask can be active at a time), a <strong>rotated</strong> mask, <strong>children with custom materials</strong> or third-party graphics (Soft clips plain Images, RawImages, UI Shapes and TMP text, while a stencil clips everything), or TMP text that needs bevel, glow, lighting or a textured face inside the mask.</div>
+<p>Other things to know about Soft masking:</p>
+<ul>
+  <li>Clipping is visual only, so a clipped child still receives pointer events. Set <em>Raycast Mode</em> to Off on elements scrolled out of view.</li>
+  <li>Soft-clipped TMP text keeps its face, outline and underlay (drop shadow) settings. Effects that only exist in TMP's full Distance Field shader are not applied while clipped, and inline sprites and fallback fonts aren't clipped.</li>
+  <li>Your children's materials and settings are never modified on disk. Clipping is injected at render time only, so switching presets, saving and entering play mode all behave as usual.</li>
+</ul>
+<p><span class="field">Maskable</span>, the last field in the module, works in every masking mode including None. It controls whether this shape's <em>own</em> effects can be clipped by an ancestor Mask or RectMask2D, so turn it off to let a big shadow or glow spill outside a masked parent.</p>
+
+<h2 id="clicks">Clicks &amp; Raycasting</h2>
+<p>Whether the shape catches pointer events is set at the top of the inspector, next to <strong>Selectable</strong>. Most shapes show a <strong>Raycast Target</strong> checkbox. A shape whose Selectable lives on a <em>different</em> UI Shape, such as a child checkmark, shows a <strong>Raycast Mode</strong> dropdown instead:</p>
+<table>
+  <thead><tr><th>Mode</th><th>What it does</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Follow</strong> (default)</td><td>Catches nothing itself, but mirrors the parent shape's Highlighted, Pressed and Selected look across the whole parent. That's how a checkmark lights up with its toggle.</td></tr>
+    <tr><td><strong>On</strong></td><td>Hit-tests its own bounds and computes its own state.</td></tr>
+    <tr><td><strong>Off</strong></td><td>Inert, purely decorative.</td></tr>
+  </tbody>
+</table>
+<p>Hit-testing matches the shape you see, not its bounding rectangle. Rounded and octagonal corners, slant and taper are all accounted for, so a click just outside a corner falls through to whatever's behind. Drop shadow and glow aren't clickable.</p>
+<p>This only ever applies to the shape itself. Anything parented under it, whether buttons, images, text or other shapes, keeps its own pointer behaviour, so turning <strong>Raycast Target</strong> off makes the shape click-through without affecting its children.</p>
+
+<h2 id="states">Button States</h2>
+<p>A UI Shape can restyle itself per Selectable state, with no sprite swaps.</p>
+<ol>
+  <li>Assign your Button (or any <code>Selectable</code>) to <strong>Selectable</strong>, or click <strong>Add Button</strong> / <strong>Add Toggle</strong> to add and assign one in a single step. UI Shapes sets that Selectable's own <em>Transition</em> and <em>Navigation</em> to <strong>None</strong>, since this component drives the visuals, and turns <strong>Raycast Target</strong> on. Switch Navigation back on afterwards if you need keyboard or controller support.</li>
+  <li>A row of tabs appears: <strong>Normal · Highlighted · Pressed · Selected · Disabled</strong>. Normal is the shape's main setup, and the others hold per-state overrides.</li>
+  <li>On a state tab, tick the checkbox next to any property you want to change there. Unticked properties follow Normal, and unticking one snaps it straight back, so there's nothing to reset by hand. A module's header checkbox is itself an override, which is how you switch an effect on or off for one state.</li>
+  <li>Set <strong>Transition Duration</strong> (next to the Selectable field) to cross-fade between states; 0 is instant. Fades use unscaled time, so they keep working while the game is paused.</li>
+</ol>
+<p>An <strong>orange bar</strong> in the left gutter marks every property, module header and tab that differs from Normal, like Unity's prefab override lines, so you can see what a state changes without opening it.</p>
+<p>The selected tab <em>is</em> the live preview: the element on screen shows that state while you edit it, and switching back to <strong>Normal</strong> shows the base look. Previews are never saved.</p>
+<p>State precedence matches Unity's Selectable: Disabled &gt; Pressed &gt; Selected &gt; Highlighted &gt; Normal.</p>
+
+<h2 id="toggles">Toggles</h2>
+<p>Assign a <strong>Toggle</strong> as the Selectable (or click <strong>Add Toggle</strong>) and an <strong>Off | On</strong> bar appears above the state tabs, so every interaction state can be authored separately for the unchecked and checked toggle.</p>
+<ul>
+  <li><strong>Off</strong> is the ordinary state model: Off/Normal is the base look, and the other Off tabs override it.</li>
+  <li><strong>On/Normal</strong> is the checked resting look, a set of overrides on top of the base.</li>
+  <li>Each On state falls back to On/Normal, then to the matching Off state, then to the base. For example, with Off/Normal dark grey and Off/Highlighted light grey, On/Highlighted starts out light grey. Set On/Normal's fill to green and On/Highlighted follows to green. Override On/Highlighted itself to light green and it stops inheriting. The inspector always shows the resolved value.</li>
+  <li>Checking and unchecking cross-fade with the same <strong>Transition Duration</strong> as any other state change.</li>
+  <li>Changes from code, including <code>SetIsOnWithoutNotify</code> and <strong>Toggle Group</strong> (radio button) switching, are picked up automatically. There's nothing to call.</li>
+</ul>
+<h3>Checkmarks</h3>
+<p><strong>Add Toggle</strong> also creates a ready-made child <em>Checkmark</em> UI Shape, grey when off and green when on, driven by the same Toggle, so a fresh toggle works immediately. Restyle or delete it freely.</p>
+<p>That's the general pattern for shape checkmarks: give a child UI Shape the <em>same Toggle</em> as its Selectable and author its On/Off looks. Sharing the Selectable also makes the checkmark follow the parent's Highlighted, Pressed and Selected state across the whole parent, so hovering anywhere on the toggle lights the checkmark too (see <a href="#clicks">Raycast Mode</a>).</p>
+<div class="callout note"><span class="tag">Note</span>A UI Shape can't go in the Toggle's own <em>Graphic</em> field, because it isn't a uGUI Graphic. Use that field only if you'd rather have a plain Image checkmark that Unity fades for you.</div>
+
+<h2 id="styles">Reusable Styles</h2>
+<p>Any tab, Normal or a state, can save its settings as a <strong>style asset</strong> and load them onto other shapes. The <strong>Style</strong> field at the top of each tab is the picker.</p>
+<ul>
+  <li><strong>Save Style</strong> writes the current tab to a <code>.asset</code> file and loads it.</li>
+  <li>Assigning an existing style applies its settings to that tab.</li>
+  <li>While a style is loaded, editing the tab updates the asset automatically, and every other shape using it updates live. Editing the asset in its own inspector does the same.</li>
+  <li><strong>Unload</strong> (or clearing the field) keeps the current values but stops syncing.</li>
+  <li>Create an empty style with <strong>Assets ▸ Create ▸ UI Shapes ▸ Style</strong>.</li>
+</ul>
+<p>A style saved from <strong>Normal</strong> is a complete look, so loading it onto a state tab overrides every property there. A style saved from a <strong>state</strong> tab is a <em>delta</em>: it stores only that state's overrides, so loading it onto another button changes just those properties and leaves the rest following that button's own Normal. That's what makes a shared "hover style" or "pressed style" reusable across buttons that look nothing alike.</p>
+<p>Styles are an authoring convenience only. Nothing reads them at runtime, so there's no performance cost, and deleting a style asset never breaks a build.</p>
+
+<h2 id="animation">Animation &amp; Scripting</h2>
+<p>Every setting is a plain serialized field, so the <strong>Animator</strong> can drive it directly: corner radius, colours, shadow distance, anything. Animated values sit <em>under</em> state overrides, so animation drives the base look and states override on top.</p>
+<p>From code, everything lives in the <code>PrizmGames.UIShapes</code> namespace:</p>
+<pre><code>using PrizmGames.UIShapes;
+
+var shape = GetComponent&lt;UIShape&gt;();
+shape.CornerRadius   = 24f;          // properties push to the shader automatically
+shape.FillColor      = Color.white;
+shape.Glow           = true;
+shape.ShadowOpacity  = 0.6f;
+shape.SetBorderMode(UIShape.BorderMode.Round);
+
+shape.Progress       = true;         // radial timer
+shape.ProgressAmount = timeLeft / duration;</code></pre>
+<ul>
+  <li>PascalCase properties mirror the inspector fields (<code>CornerRadius</code>, <code>FillColor</code>, <code>ShadowRadius</code>, <code>TextureSprite</code>, <code>SkewAngle</code> and so on) and mark the shape dirty on write.</li>
+  <li>Gradients use a trio per effect: <code>FillGradient</code>, <code>FillColor2</code>, <code>FillGradientAngle</code>, and likewise for <code>Shadow…</code>, <code>InnerShadow…</code>, <code>Glow…</code> and <code>Outline…</code>.</li>
+  <li>Enum settings use a <code>Set…</code> method instead of a property (<code>SetCornerStyle</code>, <code>SetBorderMode</code>, <code>SetSkewAxis</code>, <code>SetSkewMode</code>, <code>SetTextureFit</code>, <code>SetProgressMethod</code>, <code>SetProgressOrigin</code>, <code>SetProgressTargets</code>), because a property would collide with the enum's own name.</li>
+  <li><code>shape.CurrentState</code> reads the active state. <code>shape.GetStyle(state)</code> returns an Off-column override block, and <code>shape.GetOnStyle(state)</code> the checked column's.</li>
+  <li>If you set the public camelCase <em>fields</em> directly, call <code>shape.SetDirty()</code> afterwards.</li>
+</ul>
+
+<h2 id="performance">Performance &amp; Platforms</h2>
+<p>Each enabled effect draws one quad, and effects of the same kind batch together across the whole canvas, so a canvas costs at most one draw call per effect kind in use, however many shapes it holds. A screenful of static shapes costs almost nothing on the CPU. The thing to budget is <strong>painted area</strong>: transparent UI doesn't occlude, so every effect quad costs its full on-screen size whether it ends up visible or buried.</p>
+<ul>
+  <li>Shadow and glow <strong>Radius</strong> directly sets how many pixels the effect covers. On mobile, VR and Switch, prefer proportionate radii over full-screen glows, especially in long scrolling lists.</li>
+  <li>Put shadows on containers rather than on every element inside them.</li>
+  <li>Keep effect-heavy UI on its own Canvas, which is good uGUI practice anyway.</li>
+  <li>Soft-masked scroll views cull rows that scroll out of view, so long lists stay cheap.</li>
+</ul>
+<p><strong>Mobile.</strong> Fully supported on GLES 3.0+, Metal and Vulkan. As a scale reference, on a 2023 budget Android phone a large panel covering roughly a fifth of the screen measures about 1 ms of GPU time for Fill or Outline, and around 3 ms for each soft effect (Drop Shadow, Inner Shadow, Glow, Bevel). Cost scales with area, so ordinary buttons and cards are far cheaper. Background Blur has its own budget, covered in its section.</p>
+<p><strong>VR.</strong> Works with Single Pass Instanced rendering. Note that Unity doesn't render <em>Screen Space – Overlay</em> canvases in VR at all, so use World Space or Screen Space – Camera, as with any uGUI content. Background Blur isn't supported in VR.</p>
+<p><strong>Consoles.</strong> No platform-specific code, and the shaders compile through Unity's standard pipeline for every target. On Switch, treat performance like a mid-range mobile GPU.</p>
+<p><strong>Builds.</strong> Shaders are referenced by the component, so they're always included. There's no <em>Always Included Shaders</em> or Resources setup to do. Every per-frame path is allocation-free.</p>
+
+<h2 id="troubleshooting">Troubleshooting</h2>
+<table>
+  <thead><tr><th>Symptom</th><th>Fix</th></tr></thead>
+  <tbody>
+    <tr><td>"Shader not found" in the console</td><td>The files under <code>UI Shapes/Shaders/</code> were moved or deleted. Reimport the package.</td></tr>
+    <tr><td>Background Blur does nothing on URP</td><td>Add the <strong>UI Shapes Background Blur Feature</strong> to your URP Renderer asset. The inspector shows the same reminder.</td></tr>
+    <tr><td>Background Blur shows a sharp background</td><td>Unity cached a stale shader compile. Right-click <code>UI Shapes/Shaders</code> and choose <em>Reimport</em>.</td></tr>
+    <tr><td>Background Blur doesn't blur other UI on URP / HDRP</td><td>By design, since the capture is taken after the camera finishes. Only Built-in blurs same-canvas UI.</td></tr>
+    <tr><td>Effects invisible in VR</td><td>The canvas is Screen Space – Overlay. Switch it to World Space.</td></tr>
+    <tr><td>Button states don't apply in play mode</td><td>Check that a Selectable is assigned and its own <em>Transition</em> is None. The inspector hints at both.</td></tr>
+    <tr><td>TMP text isn't clipped by a Soft mask</td><td>The TMP integration compiles only when a TMP package is installed. Check that TMP is present in the project.</td></tr>
+    <tr><td>Soft-clipped TMP text is missing bevel / glow / lighting</td><td>By design: clipped text uses a Mobile Distance Field shader, which keeps face, outline and underlay. Use Simple masking if you need the full feature set.</td></tr>
+    <tr><td>A child Image or RawImage isn't soft-clipped</td><td>Graphics with a custom material are skipped deliberately. Remove the custom material, or use Simple masking.</td></tr>
+    <tr><td>A child isn't clipped by Simple masking, <code>Mask</code> or <code>RectMask2D</code></td><td>Check <em>Maskable</em> on that child. Stencil and rect clipping only apply to graphics that have it on.</td></tr>
+    <tr><td>Hidden objects named <code>[UIShape] …</code></td><td>The internal effect renderers. They're never saved into your scene or prefab and rebuild automatically, so don't edit them.</td></tr>
+  </tbody>
+</table>
+
+<h2 id="upm">Using UI Shapes as a UPM Package</h2>
+<p>The <code>UI Shapes</code> folder is also a UPM package (<code>com.prizmgames.uishapes</code>). To reference it from another project, add this to that project's <code>Packages/manifest.json</code>:</p>
+<pre><code>"com.prizmgames.uishapes": "file:../path/to/UI Shapes/Assets/UI Shapes"</code></pre>
+
+<footer class="doc">
+  © PRIZM GAMES · UI Shapes v1.0.0 · Support: see the Asset Store listing.
+</footer>
+
+</div>
+</body>
+</html>
