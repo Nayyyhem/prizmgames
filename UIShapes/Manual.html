@@ -219,32 +219,36 @@
 <table>
   <thead><tr><th>Field</th><th>What it does</th></tr></thead>
   <tbody>
-    <tr><td><span class="field">Color Mode</span></td><td>Whether the effect uses a <strong>Single Color</strong> or a two-colour gradient. See below.</td></tr>
+    <tr><td><span class="field">Color Mode</span></td><td>Whether the effect uses a <strong>Single Color</strong> or a gradient. See below.</td></tr>
     <tr><td><span class="field">Opacity</span></td><td>0 to 1, fading that effect alone. Layers on top of the colour's own alpha.</td></tr>
     <tr><td><span class="field">Blend Mode</span></td><td>How the effect composites over what's beneath it. <strong>Normal</strong> covers, <strong>Additive</strong> brightens (good for glows and bevel highlights), and <strong>Multiply</strong> darkens (good for bevel shadows and tinted overlays).</td></tr>
     <tr><td><span class="field">Intensity</span></td><td>0.1 to 10, an alpha multiplier. Values above 1 make a soft effect's core denser without making it any bigger, which is the difference between a faint haze and a solid core at the same radius. Only the three soft effects have it.</td></tr>
   </tbody>
 </table>
 <h3>Gradients</h3>
-<p>Wherever <strong>Color Mode</strong> offers a gradient, the choices are <strong>Vertical</strong> (top to bottom), <strong>Horizontal</strong> (left to right), or <strong>Custom Angle</strong>, which adds an <span class="field">Angle</span> slider (0° puts the end colour on the right, 90° on top). Single Color shows one colour swatch; the gradient modes show a start and an end swatch.</p>
-<p>Both colours carry alpha, so a transparent end colour gives a clean fade-out. Colours blend perceptually, matching Photoshop, Figma and CSS. Gradients are free: same draw call, and they work with masking, the Animator and state transitions, including cross-fading between a single colour and a gradient.</p>
+<p>Wherever <strong>Color Mode</strong> offers a gradient, the choices are <strong>Vertical</strong> (top to bottom), <strong>Horizontal</strong> (left to right), or <strong>Custom Angle</strong>, which adds an <span class="field">Angle</span> slider (0° puts the end colour on the right, 90° on top).</p>
+<p><strong>Fill</strong> uses Unity's own gradient editor: click the <span class="field">Gradient</span> field and add as many colour and alpha stops as you like, anywhere along the ramp. Set the gradient's own mode to <strong>Fixed</strong> for hard-edged bands instead of a smooth blend. Every other effect (Texture, Drop Shadow, Inner Shadow, Glow, Outline) keeps a simpler start and end colour, which is what those effects are normally used for.</p>
+<p>Colours carry alpha, so a transparent stop gives a clean fade-out, and alpha stops can sit at different positions from the colour stops. Colours blend perceptually, matching Photoshop, Figma and CSS. Gradients are free: same draw call, no extra texture, and they work with masking and state transitions, including cross-fading between a single colour and a gradient, or between two gradients with different numbers of stops.</p>
+<div class="callout note"><span class="tag">Note</span>The Animator can key an effect's <span class="field">Color</span> (in Single Color mode) but not a Gradient, which Unity's animation system cannot handle. To animate a Fill gradient, put the gradients on button states and let the state transition cross-fade them, or swap them from a script.</div>
 <div class="callout note"><span class="tag">Note</span>Multiply-blended effects render in a separate draw call from Normal and Additive ones. It's a small cost, and worth it for the classic bevel look, but it's the one blend mode with a performance side.</div>
 
 <h2 id="fill">Fill</h2>
-<p>The shape's interior, as a single colour or a gradient.</p>
+<p>The shape's interior, as a single colour or a multi-stop gradient.</p>
 <p><em>Common controls:</em> Color Mode and Opacity. Fill has no blend mode or intensity of its own, since it's the bottom layer everything else composites over. Textures are a separate module, covered next.</p>
 
 <h2 id="texture">Texture</h2>
-<p>An optional sprite drawn on top of the Fill and clipped to the shape's corners, like an Image layered over the fill. Enable it independently of Fill. With no sprite assigned it draws a plain white rect.</p>
-<p><em>Common controls:</em> Blend Mode and Opacity. There's no colour or gradient here, since the sprite supplies the colour.</p>
+<p>An optional sprite drawn on top of the Fill and clipped to the shape's corners, like an Image layered over the fill. Enable it independently of Fill. With no sprite assigned it draws a plain white rect, which the tint below turns into a plain coloured layer.</p>
+<p><em>Common controls:</em> Color Mode, Blend Mode and Opacity. The colour here is a <strong>tint</strong>: it multiplies the sprite's own colours rather than replacing them, exactly like <code>Image.color</code>. White, the default, leaves the sprite untouched, and a greyscale or white sprite can be recoloured freely. Choosing a gradient Color Mode gives a two-colour tint gradient across the shape, so one sprite can fade between two colours. The tint's alpha multiplies with Opacity, which is how you fade a texture out across the shape.</p>
 <table>
   <thead><tr><th>Field</th><th>What it does</th></tr></thead>
   <tbody>
     <tr><td><span class="field">Texture</span></td><td>The sprite to draw. Leave it empty to draw nothing.</td></tr>
     <tr><td><span class="field">Texture Fit</span></td><td>How the sprite fits the rect when the aspect ratios don't match. See the table below.</td></tr>
     <tr><td><span class="field">Pixels Per Unit Multiplier</span></td><td>Constant Size only. Scales the tile's on-screen size, matching <code>Image.pixelsPerUnitMultiplier</code>.</td></tr>
+    <tr><td><span class="field">Grayscale</span></td><td>Strips the sprite's colour before the tint is applied. On its own it greys an image out, which is what you want on a Disabled state. Combined with a tint it recolours the image through that single colour.</td></tr>
   </tbody>
 </table>
+<div class="callout tip"><span class="tag">Sepia</span>Tick <span class="field">Grayscale</span> and set the tint to a warm brown. Because the colour is stripped first, the tint has nothing left to fight, so the whole image comes through in that one hue. A blue tint gives a cyanotype, a green one gives a night-vision look, and a gradient tint fades the image between two hues. Without Grayscale the same tint only darkens the colours already there.</div>
 <p><span class="field">Texture Fit</span> handles mismatched aspect ratios:</p>
 <table>
   <thead><tr><th>Mode</th><th>Behaviour</th></tr></thead>
@@ -255,7 +259,7 @@
     <tr><td><strong>Constant Size</strong></td><td>A fixed on-screen texel size, tiled to cover the rect. Needs a non-atlas sprite with <em>Wrap Mode: Repeat</em>, and the inspector warns if the sprite doesn't qualify. The tile size comes from the sprite's <em>Pixels Per Unit</em>, the Canvas's <em>Reference Pixels Per Unit</em>, and the multiplier above.</td></tr>
   </tbody>
 </table>
-<p>Textures always render upright. They never shear with a skewed shape, though the silhouette still clips them. Every Texture field can be overridden per state and animated, so states can swap the sprite, the fit or the opacity.</p>
+<p>Textures always render upright. They never shear with a skewed shape, though the silhouette still clips them. The tint gradient does follow the shape, so it stays aligned with the fill's gradient on a skewed or tapered shape. Every Texture field can be overridden per state and animated, so states can swap the sprite, the fit, the tint or the opacity. <span class="field">Grayscale</span> is on or off rather than a 0 to 1 amount, so it switches at the start of a state transition instead of fading across it, the same way <span class="field">Texture Fit</span> and the blend modes switch.</p>
 
 <h2 id="dropshadow">Drop Shadow</h2>
 <p>A soft shadow behind the element.</p>
@@ -459,7 +463,8 @@ shape.Progress       = true;         // radial timer
 shape.ProgressAmount = timeLeft / duration;</code></pre>
 <ul>
   <li>PascalCase properties mirror the inspector fields (<code>CornerRadius</code>, <code>FillColor</code>, <code>ShadowRadius</code>, <code>TextureSprite</code>, <code>SkewAngle</code> and so on) and mark the shape dirty on write.</li>
-  <li>Gradients use a trio per effect: <code>FillGradient</code>, <code>FillColor2</code>, <code>FillGradientAngle</code>, and likewise for <code>Shadow…</code>, <code>InnerShadow…</code>, <code>Glow…</code> and <code>Outline…</code>.</li>
+  <li>Fill's gradient is <code>FillGradient</code> (the mode), <code>FillGradientColors</code> (a standard <code>UnityEngine.Gradient</code>) and <code>FillGradientAngle</code>. Assigning <code>FillGradientColors</code> copies the gradient in, so the shape never shares your instance; if you instead mutate the returned gradient in place, call <code>shape.SetDirty()</code>.</li>
+  <li>The two-colour effects use a trio each: <code>ShadowGradient</code>, <code>ShadowColor2</code>, <code>ShadowGradientAngle</code>, and likewise for <code>InnerShadow…</code>, <code>Glow…</code> and <code>Outline…</code>. The Texture tint follows the same pattern: <code>TextureColor</code>, <code>TextureGradient</code>, <code>TextureColor2</code>, <code>TextureGradientAngle</code>, plus <code>TextureGrayscale</code>.</li>
   <li>Enum settings use a <code>Set…</code> method instead of a property (<code>SetCornerStyle</code>, <code>SetBorderMode</code>, <code>SetSkewAxis</code>, <code>SetSkewMode</code>, <code>SetTextureFit</code>, <code>SetProgressMethod</code>, <code>SetProgressOrigin</code>, <code>SetProgressTargets</code>), because a property would collide with the enum's own name.</li>
   <li><code>shape.CurrentState</code> reads the active state. <code>shape.GetStyle(state)</code> returns an Off-column override block, and <code>shape.GetOnStyle(state)</code> the checked column's.</li>
   <li>If you set the public camelCase <em>fields</em> directly, call <code>shape.SetDirty()</code> afterwards.</li>
