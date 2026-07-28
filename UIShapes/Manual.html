@@ -163,6 +163,7 @@
     <li><a href="#performance">Performance &amp; Platforms</a></li>
     <li><a href="#troubleshooting">Troubleshooting</a></li>
     <li><a href="#upm">UPM Package</a></li>
+    <li><a href="#support">Contact &amp; Support</a></li>
   </ul>
 </nav>
 
@@ -259,6 +260,7 @@
     <tr><td><strong>Constant Size</strong></td><td>A fixed on-screen texel size, tiled to cover the rect. Needs a non-atlas sprite with <em>Wrap Mode: Repeat</em>, and the inspector warns if the sprite doesn't qualify. The tile size comes from the sprite's <em>Pixels Per Unit</em>, the Canvas's <em>Reference Pixels Per Unit</em>, and the multiplier above.</td></tr>
   </tbody>
 </table>
+<p>Every fit works from the sprite's full authored size, including any transparent border the importer trimmed away under <em>Mesh Type: Tight</em>. A sprite whose artwork sits off to one side therefore keeps its intended aspect and position, exactly as a UI Image would draw it. The one exception is a sprite packed into a Sprite Atlas with trimming: the atlas no longer contains those transparent pixels, so the fit works from the trimmed artwork instead. Use <em>Mesh Type: Full Rect</em> on the sprite if you need the border preserved in an atlas.</p>
 <p>Textures always render upright. They never shear with a skewed shape, though the silhouette still clips them. The tint gradient does follow the shape, so it stays aligned with the fill's gradient on a skewed or tapered shape. Every Texture field can be overridden per state and animated, so states can swap the sprite, the fit, the tint or the opacity. <span class="field">Grayscale</span> is on or off rather than a 0 to 1 amount, so it switches at the start of a state transition instead of fading across it, the same way <span class="field">Texture Fit</span> and the blend modes switch.</p>
 
 <h2 id="dropshadow">Drop Shadow</h2>
@@ -505,8 +507,12 @@ shape.ProgressAmount = timeLeft / duration;</code></pre>
 <p>The <code>UI Shapes</code> folder is also a UPM package (<code>com.prizmgames.uishapes</code>). To reference it from another project, add this to that project's <code>Packages/manifest.json</code>:</p>
 <pre><code>"com.prizmgames.uishapes": "file:../path/to/UI Shapes/Assets/UI Shapes"</code></pre>
 
+<h2 id="support">Contact &amp; Support</h2>
+<p>Questions, bug reports and feature requests are all welcome. Email <a href="mailto:support@prizmgames.net">support@prizmgames.net</a>.</p>
+<p>For a bug report, please include your Unity version, the render pipeline you're using (Built-in, URP or HDRP), the UI Shapes version, and the steps to reproduce the problem. A screenshot or a small repro scene helps a lot.</p>
+
 <footer class="doc">
-  © PRIZM GAMES · UI Shapes v1.0.0 · Support: see the Asset Store listing.
+  © PRIZM GAMES · UI Shapes v1.0.0 · Support: <a href="mailto:support@prizmgames.net">support@prizmgames.net</a>
 </footer>
 
 </div>

@@ -29,26 +29,14 @@ ScrollReveal().reveal(".scroll-down-link", {
   origin: "top",
 });
 
-/* About Section */
+/* Section Titles */
 ScrollReveal().reveal(".section-title", {
   ...defaultProps,
   delay: 400,
   distance: "0px",
 });
-ScrollReveal().reveal(".about-wrapper__image", {
-  ...defaultProps,
-  delay: 600,
-  scale: 0.5,
-});
 
-ScrollReveal().reveal(".about-wrapper__info", {
-  ...defaultProps,
-  delay: 700,
-  distance: "100px",
-  origin: window.innerWidth > 768 ? "left" : "top",
-});
-
-/* Projects Section */
+/* Games & Assets Sections */
 ScrollReveal().reveal(".project-wrapper__text", {
   ...defaultProps,
   delay: 600,

@@ -1,0 +1,172 @@
+#assets {
+  background-color: $light-white;
+  color: $dark-blue-text;
+  margin-top: -15rem;
+  padding-top: 15rem;
+  @include respond(tab-land) {
+    margin-top: 0;
+    padding-top: 5rem;
+  }
+  @include respond(phone) {
+    padding-bottom: 1px;
+  }
+}
+
+// Shared by the Games and Assets sections
+.project-wrapper {
+  margin-bottom: 15rem;
+  @include respond(phone) {
+    margin-bottom: 0rem;
+  }
+  .row {
+    margin: 0;
+    margin-bottom: 8rem;
+    @include respond(phone) {
+      margin-bottom: 4rem;
+    }
+  }
+  &__text {
+    width: 100%;
+    text-align: left;
+    @include respond(tab-land) {
+      margin-bottom: 4.8rem;
+    }
+    @include respond(phone) {
+      margin-bottom: 2.5rem;
+    }
+    &-title {
+      font-weight: bold;
+      margin-bottom: 1.8rem;
+      font-size: $mid-font-size;
+
+      @include respond(phone) {
+        font-size: 2rem;
+      }
+    }
+
+    &-info {
+      margin-bottom: 1.5rem;
+    }
+
+    &-btns {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+  }
+
+  &__image {
+    width: 90%;
+    margin: 0 auto;
+
+    @include respond(tab-land) {
+      width: 100%;
+      margin: 0;
+    }
+    & .thumbnail {
+      border: none;
+      box-shadow: 8px 8px 9px 7px rgba(174, 174, 192, 0.4),
+        -5px -5px 15px 7px #ffffff;
+
+      .img-fluid {
+        width: 100%;
+        height: auto;
+        vertical-align: middle;
+        border-radius: 2px;
+      }
+      @include respond(phone) {
+        box-shadow: none;
+        border: 1px solid #d2d2d2;
+        margin-bottom: 3.2rem;
+        transform: none;
+      }
+    }
+  }
+}
+
+// Responsive 16:9 YouTube embed, standing in for a .thumbnail image
+.video-embed {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 2px;
+  overflow: hidden;
+  box-shadow: 8px 8px 9px 7px rgba(174, 174, 192, 0.4),
+    -5px -5px 15px 7px #ffffff;
+
+  iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  // Local thumbnail shown until the visitor opts in by pressing play
+  &__facade {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    background: #000000;
+    cursor: pointer;
+
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__play {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 6.8rem;
+    height: 4.8rem;
+    border-radius: 1.2rem;
+    background: rgba(0, 0, 0, 0.7);
+    transition: background 0.2s ease-in-out;
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-40%, -50%);
+      border-style: solid;
+      border-width: 1.1rem 0 1.1rem 1.8rem;
+      border-color: transparent transparent transparent $white-color;
+    }
+  }
+
+  &__facade:hover &__play,
+  &__facade:focus-visible &__play {
+    background: #ff0000;
+  }
+
+  @include respond(phone) {
+    box-shadow: none;
+    border: 1px solid #d2d2d2;
+  }
+}
+
+.store-badge-row {
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.store-badge-note {
+  font-size: 1.4rem;
+  font-style: italic;
+  opacity: 0.7;
+}

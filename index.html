@@ -21,7 +21,7 @@ Have fun creating your portfolio on this template!!! -->
     <title>PRIZM GAMES</title>
 
     <!-- Add some coding keywords below, Ex: (javascript, yourusername, etc) -->
-    <meta name="keywords" content="prizm games, realm stories" />
+    <meta name="keywords" content="prizm games, realm stories, ui shapes, unity asset store" />
 
     <!-- Improve your SEO by adding a small descrption of you -->
     <meta name="description" content="PRIZM GAMES" />
@@ -82,23 +82,6 @@ Have fun creating your portfolio on this template!!! -->
       type="text/javascript"
       src="./javascript/scrollveal.js"
     ></script>
-
-    <!-- Remove Google Analytics once you have your portfolio website set-up -->
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=UA-122228201-4"
-    ></script>
-    <script>
-      window.dataLayer = window.dataLayer || []
-      function gtag() {
-        dataLayer.push(arguments)
-      }
-      gtag("js", new Date())
-
-      gtag("config", "UA-122228201-4")
-    </script>
-    <!-- End of Google Analytics -->
   </head>
   <body>
     <!-- Hero Section -->
@@ -108,57 +91,28 @@ Have fun creating your portfolio on this template!!! -->
           Hi, we are <span class="text-color-main name">PRIZM GAMES</span>
         </h1>
         <p class="hero-cta">
-          <a class="cta-btn cta-btn--hero" href="#about">About</a>
+          <a class="cta-btn cta-btn--hero" href="#games">Games</a>
         </p>
         <br />
         <p class="hero-cta">
-          <a class="cta-btn cta-btn--hero" href="#projects">Games</a>
+          <a class="cta-btn cta-btn--hero" href="#assets">Assets</a>
         </p>
         <br />
         <p class="hero-cta">
           <a class="cta-btn cta-btn--hero" href="#contact">Contact</a>
         </p>
       </section>
-      <!--<a href="#about" class="scroll-down-link" aria-label="scroll-down">
+      <!--<a href="#games" class="scroll-down-link" aria-label="scroll-down">
         <div class="scroll-down"></div
       ></a>-->
     </div>
     <!-- /END Hero Section -->
 
-    <!-- About Section -->
-    <section id="about">
-      <div class="container">
-        <h2 class="section-title">About</h2>
-        <div class="row about-wrapper">
-          <div class="about-wrapper__image">
-            <img
-              class="img-fluid"
-              src="./assets/PRIZM-Logo_white_1k.png"
-              alt="Profile Image"
-              width="512"
-            />
-          </div>
-          <div class="about-wrapper__info">
-            <p class="about-wrapper__info-text">
-              Welcome to PRIZM GAMES, your gateway to endless mobile gaming excitement!
-            </p>
-            <p class="about-wrapper__info-text">
-              We deliver top-notch, free-to-play mobile gaming experiences. With our flagship game leading the charge, we're dedicated to crafting immersive worlds and addictive gameplay that keep you hooked for hours on end.
-            </p>
-            <p class="about-wrapper__info-text">
-              Get ready to embark on an adventure like no other, where every swipe and tap brings you closer to victory. With PRIZM GAMES, the fun never stops.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- /END About Section -->
-
-    <!--Projects Section-->
-    <section id="projects">
+    <!-- Games Section -->
+    <section id="games">
       <div class="container">
         <div class="project-wrapper">
-          <h2 class="section-title dark-blue-text">Games</h2>
+          <h2 class="section-title">Games</h2>
 
           <!-- Each .row is a project -->
           <article class="row">
@@ -175,7 +129,7 @@ Have fun creating your portfolio on this template!!! -->
                   href="https://youtube.com/shorts/MPmOXy9GD2Y?feature=share"
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="cta-btn cta-btn--hero cta-btn--projects"
+                  class="cta-btn cta-btn--resume"
                   ><i class="fa-brands fa-youtube"></i> Trailer</a
                 >
               </div>
@@ -213,7 +167,79 @@ Have fun creating your portfolio on this template!!! -->
         </div>
       </div>
     </section>
-    <!-- End Projects Section -->
+    <!-- END Games Section -->
+
+    <!-- Assets Section -->
+    <section id="assets">
+      <div class="container">
+        <div class="project-wrapper">
+          <h2 class="section-title">Assets</h2>
+
+          <!-- Each .row is an asset -->
+          <article class="row">
+            <div class="project-wrapper__text">
+              <h3 class="project-wrapper__text-title">UI Shapes</h3>
+              <p class="project-wrapper__text-info">
+                UI Shapes is a Unity asset that draws every UI effect procedurally from a single component: rounded corners, gradients, drop and inner shadows, glow, outline, bevel and background blur, mixed freely on any uGUI element.
+              </p>
+              <p class="project-wrapper__text-info">
+                Soft masking follows the real silhouette, buttons and toggles get a live-previewed tab per interaction state, and effects batch across the whole canvas, so busy screens stay at a handful of draw calls, even on mobile.
+              </p>
+              <div class="project-wrapper__text-btns">
+                <a
+                  href="./UIShapes/Manual.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="cta-btn cta-btn--hero cta-btn--projects"
+                  ><i class="fa-regular fa-file-lines"></i> Documentation</a
+                >
+              </div>
+            </div>
+
+            <div class="project-wrapper__image">
+              <!-- Click-to-load: nothing is requested from YouTube until the
+                   visitor presses play, so the page sets no third-party
+                   cookies on its own. -->
+              <div class="video-embed">
+                <button
+                  type="button"
+                  class="video-embed__facade"
+                  data-video-id="KCqmb-MHPQI"
+                  data-video-title="UI Shapes Trailer"
+                  aria-label="Play the UI Shapes trailer (loads YouTube)"
+                >
+                  <img
+                    src="./UIShapes/trailer-thumbnail.jpg"
+                    alt=""
+                    width="1280"
+                    height="720"
+                  />
+                  <span class="video-embed__play" aria-hidden="true"></span>
+                </button>
+              </div>
+              <div class="store-badge-row">
+                <a
+                  href="https://assetstore.unity.com/packages/slug/394532"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="cta-btn--store"
+                  aria-label="Get it on the Unity Asset Store"
+                >
+                  <i class="fa-brands fa-unity" aria-hidden="true"></i>
+                  <span>
+                    <small>Get it on the</small>
+                    <strong>Unity Asset Store</strong>
+                  </span>
+                </a>
+                <span class="store-badge-note">Coming soon</span>
+              </div>
+            </div>
+          </article>
+          <!-- /END Asset -->
+        </div>
+      </div>
+    </section>
+    <!-- END Assets Section -->
 
     <!-- Contact Section -->
     <section id="contact">
@@ -252,5 +278,6 @@ Have fun creating your portfolio on this template!!! -->
     </script>
     <script src="./javascript/vanilla-tilt.min.js"></script>
     <script type="text/javascript" src="./javascript/valtilt.js"></script>
+    <script type="text/javascript" src="./javascript/video-embed.js"></script>
   </body>
 </html>

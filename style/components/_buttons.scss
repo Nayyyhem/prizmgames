@@ -136,6 +136,61 @@
   }
 }
 
+/* Store Badge Style */
+// Unity no longer ships an official "Get it on the Asset Store" badge, so this
+// mimics the Google Play / App Store artwork used in the Games section.
+.cta-btn--store {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.2rem;
+  height: 80px;
+  padding: 0 2.4rem;
+  border-radius: 10px;
+  background: #000000;
+  border: 1px solid #a6a6a6;
+  color: $white-color;
+  transition: all 0.3s ease-in-out;
+
+  i {
+    font-size: 3.4rem;
+    line-height: 1;
+  }
+
+  span {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    line-height: 1.15;
+  }
+
+  small {
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  strong {
+    font-size: 2rem;
+    font-weight: 700;
+  }
+
+  &:hover {
+    background: #1a1a1a;
+    transform: translateY(-2px);
+  }
+
+  @include respond(phone) {
+    height: 68px;
+    padding: 0 1.8rem;
+    i {
+      font-size: 2.8rem;
+    }
+    strong {
+      font-size: 1.7rem;
+    }
+  }
+}
+
 // /* Arrow Button */
 // .fa-angle-up {
 //   color: #272727;

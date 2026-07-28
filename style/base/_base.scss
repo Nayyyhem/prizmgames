@@ -11,4 +11,7 @@ html {
 body {
   text-align: center;
   line-height: 1.5;
+  // The clipped section seams leave small uncovered wedges whose size depends
+  // on content height. Without this they fall through to a pure white canvas.
+  background-color: $light-white;
 }
