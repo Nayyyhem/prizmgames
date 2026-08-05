@@ -131,7 +131,7 @@
      painted surface, and no backdrop-filter (printers drop it). Blur is faked
      with a blurred child inside a clipped box instead. */
   :root { --sw-fill: #8b93a1; --sw-dim: #d8dce3; }
-  .demos { display: flex; flex-wrap: wrap; gap: .9rem 1.05rem; margin: 1rem 0 1.2rem; }
+  .demos { display: flex; flex-wrap: wrap; gap: .9rem 1.05rem; margin: 1rem 0 1.2rem; padding-left: 1.0rem; }
   td .demos { margin: .7rem 0 .2rem; }
   .demo { font-size: .78rem; color: var(--muted); text-align: center; }
   .demo .cap { display: block; margin-top: .35rem; }
@@ -229,7 +229,7 @@
 
 <header class="doc">
   <h1>UI Shapes</h1>
-  <div class="sub"><span class="badge">v1.1.2</span> Manual · PRIZM GAMES</div>
+  <div class="sub"><span class="badge">v1.2.0</span> Manual</div>
 </header>
 
 <p class="lede">One component for Unity UI. Add a <code>UIShape</code> to any UI element and you get rounded, squircle, octagonal or slanted shapes with fill, gradients, textures, drop shadow, inner shadow, glow, outline, bevel and background blur, plus soft masking, progress wipes and per-state button styling. No sprites, no 9-slices, no render textures. Everything stays crisp at any resolution.</p>
@@ -239,6 +239,7 @@
   <ul>
     <li><a href="#requirements">Requirements</a></li>
     <li><a href="#quickstart">Quick Start</a></li>
+    <li><a href="#controls">Ready-Made Controls</a></li>
     <li><a href="#inspector">Using the Inspector</a></li>
     <li><a href="#shape">Shape</a></li>
     <li><a href="#skew">Skew</a></li>
@@ -254,8 +255,8 @@
     <li><a href="#progress">Progress</a></li>
     <li><a href="#masking">Masking</a></li>
     <li><a href="#clicks">Clicks &amp; Raycasting</a></li>
-    <li><a href="#states">Button States</a></li>
-    <li><a href="#toggles">Toggles</a></li>
+    <li><a href="#states">Interactive Controls</a></li>
+    <li><a href="#toggles">Control Types</a></li>
     <li><a href="#styles">Reusable Styles</a></li>
     <li><a href="#animation">Animation &amp; Scripting</a></li>
     <li><a href="#performance">Performance &amp; Platforms</a></li>
@@ -271,9 +272,8 @@
   <li><strong>Built-in, URP and HDRP</strong> all supported, and UI looks identical on all three. Background Blur needs a one-time setup step on URP (see its section).</li>
   <li>Shader Model 3.0+: mobile (GLES 3.0 / Metal / Vulkan), desktop, consoles and VR. OpenGL ES 2.0 is not supported.</li>
 </ul>
-<p><strong>Demo scenes</strong> live in <code>UI Shapes/Demo/</code>, one folder per pipeline, each with a full showcase scene and a Background Blur scene.</p>
+<p>The <strong>demo scene</strong> is <code>UI Shapes/Demo/UI Shapes Demo Scene.unity</code>. It runs on any render pipeline.</p>
 <ul>
-  <li>Open the folder matching your project and delete the others. Scenes from a pipeline you don't use show pink materials.</li>
   <li>The labels use TextMeshPro, so import <em>TMP Essentials</em> when Unity offers to. UI Shapes itself has no TMP dependency.</li>
 </ul>
 
@@ -283,8 +283,25 @@
   <li><strong>Add Component ▸ UI ▸ UI Shape.</strong></li>
   <li>Tick the effects you want in the inspector and tune them. The component builds and manages everything itself.</li>
 </ol>
-<p>To make it interactive, click <strong>Add Button</strong> or <strong>Add Toggle</strong> next to the <strong>Selectable</strong> field at the top of the inspector. See <a href="#states">Button States</a>.</p>
+<p>To make it interactive, click <strong>Add...</strong> next to the <strong>Selectable</strong> field at the top of the inspector. See <a href="#states">Interactive Controls</a>.</p>
 <div class="callout tip"><span class="tag">Tip</span>You can also use <code>UIShape</code> as a decorator: leave <strong>Fill</strong> off and put it on (or beside) an existing <code>Image</code> to wrap it in a shadow, glow or outline.</div>
+
+<h2 id="controls">Ready-Made Controls</h2>
+<p>To start from a finished control rather than a blank shape, use <strong>GameObject ▸ UI</strong>. The UI Shapes entries sit at the top of that menu, above Unity's own. Every one builds the whole hierarchy out of UI Shapes, with no Image and no sprites anywhere, and its hover and pressed looks already set up.</p>
+<table>
+  <thead><tr><th>Item</th><th>What you get</th></tr></thead>
+  <tbody>
+    <tr><td><strong>UI Shape</strong></td><td>A plain shape, same as adding the component by hand.</td></tr>
+    <tr><td><strong>Button</strong></td><td>A shape with a Button and a label.</td></tr>
+    <tr><td><strong>Toggle</strong></td><td>A row with a checkbox, a checkmark that turns on with it, and a label.</td></tr>
+    <tr><td><strong>Slider</strong></td><td>A track with a fill and a handle that follow the slider's value.</td></tr>
+    <tr><td><strong>Dropdown</strong></td><td>A closed control plus its drop-down list, with rows that highlight on hover.</td></tr>
+    <tr><td><strong>Input Field</strong></td><td>A text box with placeholder text.</td></tr>
+    <tr><td><strong>Scroll View - Vertical</strong><br><strong>Scroll View - Horizontal</strong></td><td>A soft-masked scrolling area with a scrollbar, a layout group that stacks items along the scrolling axis, and one <em>Item_1</em> shape to duplicate.</td></tr>
+  </tbody>
+</table>
+<p><strong>Dropdown</strong> and <strong>Input Field</strong> use TextMeshPro, so they appear only when TMP is installed. Everything else works either way, and adds a TMP label when TMP is there.</p>
+<p>To turn a shape you've already styled into a control instead, click <strong>Add...</strong> next to <strong>Selectable</strong> and pick from the same list. Your shape becomes the control's background, and any parts it needs are created inside it. Scroll View isn't offered there, since a scrolling area has no states to drive.</p>
 
 <h2 id="inspector">Using the Inspector</h2>
 <p>Each effect is a collapsible module, styled like Unity's Particle System. <strong>The checkbox in the module header is the on/off switch</strong>, and clicking the bar expands the settings. A module you expand while it's off shows its settings read-only.</p>
@@ -333,6 +350,7 @@
 <p>The module has its own on/off switch, so you can keep an angle set and switch the slant per button state, where it fades in and out smoothly.</p>
 <p>A trapezoid narrows as the angle grows and stops before the edges cross, settling into a clean triangle. How steep you can go depends on the element's proportions: a tall element takes a much steeper angle than a short one.</p>
 <p>Soft masks, Background Blur and click detection all follow the slanted outline.</p>
+<p>Slanted shapes cost more to draw than upright ones. It only matters on mobile and Switch, and only on effect-heavy screens: see <a href="#performance">Performance &amp; Platforms</a>.</p>
 <div class="callout note"><span class="tag">Limitation</span>Soft masking a <em>skewed</em> shape assumes the mask and its canvas aren't rotated.</div>
 
 <h2 id="common">Common Controls</h2>
@@ -428,7 +446,7 @@
 </table>
 
 <h2 id="glow">Glow</h2>
-<p>A halo around the shape, additive by default. It's centered, so unlike the shadows it has no distance or angle, and like the drop shadow it renders only outside the shape.</p>
+<p>A halo around the shape, additive by default. It's centered, so unlike the shadows it has no distance or angle, and like the drop shadow it renders only outside the shape. The halo keeps an even width all the way around, so corners stay as sharp or as round as the shape's own.</p>
 <div class="demos">
   <div class="demo"><span class="sw glow"></span><span class="cap">Glow</span></div>
 </div>
@@ -437,7 +455,7 @@
   <thead><tr><th>Field</th><th>What it does</th></tr></thead>
   <tbody>
     <tr><td><span class="field">Radius</span></td><td>How far the glow reaches out from the shape.</td></tr>
-    <tr><td><span class="field">Spread</span></td><td>Grows or shrinks the glow before blurring.</td></tr>
+    <tr><td><span class="field">Spread</span></td><td>Pushes the whole halo out from the shape, or pulls it in, without changing how soft it is.</td></tr>
   </tbody>
 </table>
 
@@ -491,7 +509,7 @@
   <tbody>
     <tr><td><span class="field">Radius</span></td><td>Blur strength.</td></tr>
     <tr><td><span class="field">Blur Opacity</span></td><td>Mixes between the sharp and the blurred background. 1 is fully blurred. This is a mix, not a fade to transparent, so lowering it lets the sharp background show through rather than making the panel see-through.</td></tr>
-    <tr><td><span class="field">Quality</span></td><td>The blur's sample count: High (32 taps), Medium (16) or Low (8). Lower counts cost proportionally less and stay smooth even at large radii, with the difference showing mostly on busy, high-contrast backdrops. This is your main lever on mobile, so see <a href="#performance">Performance &amp; Platforms</a> before shipping.</td></tr>
+    <tr><td><span class="field">Quality</span></td><td>The blur's sample count: High (32 taps), Medium (16) or Low (8). Lower counts cost proportionally less and stay smooth even at large radii. On busy, high-contrast backdrops the lower settings can look very slightly softer, which is usually invisible in context. This is your main lever on mobile, so see <a href="#performance">Performance &amp; Platforms</a> before shipping.</td></tr>
   </tbody>
 </table>
 <h4>Setup Per Pipeline</h4>
@@ -519,7 +537,7 @@
     <tr><td><span class="field">Method</span></td><td><em>Radial</em> is a 360° sweep (pie or clock). <em>Linear</em> is a straight wipe.</td></tr>
     <tr><td><span class="field">Origin</span></td><td>Where the fill starts: the edge it grows from on Linear, or the starting angle on Radial.</td></tr>
     <tr><td><span class="field">Clockwise</span></td><td>Radial only. Reverses direction.</td></tr>
-    <tr><td><span class="field">Targets</span></td><td>Which effects get trimmed: any mix of Fill, Outline, Glow, Drop Shadow, Inner Shadow and Bevel. Unticked effects always draw in full, so you can wipe the Fill while a static Outline frames the whole shape. Background Blur is never trimmed.</td></tr>
+    <tr><td><span class="field">Targets</span></td><td>Which effects get trimmed: any mix of Fill, Texture, Outline, Glow, Drop Shadow, Inner Shadow and Bevel. Fill and Texture are ticked by default. Unticked effects always draw in full, so you can wipe the Fill while a static Outline frames the whole shape. Background Blur is never trimmed.</td></tr>
   </tbody>
 </table>
 <p>The wipe has smooth anti-aliased edges, adds no draw calls, and works with masking, the Animator and button states. Gradients, textures and bevels are revealed exactly as far as the Amount.</p>
@@ -534,7 +552,8 @@
     <tr><td><strong>Soft</strong></td><td>Smooth-edged clipping, and any side can fade out. Replaces <code>Mask</code> and <code>RectMask2D</code>, so remove those from the object first.</td></tr>
   </tbody>
 </table>
-<div class="callout tip"><span class="tag">Which to use?</span><strong>Soft</strong> looks better and covers the usual case: a scrolling list or panel of Images, UI Shapes and text. Pick <strong>Simple</strong> for a <strong>mask inside another mask</strong> (only one Soft mask can be active at a time), a <strong>rotated</strong> mask, children with <strong>custom materials</strong> or third-party graphics, or TMP text that needs bevel, glow, lighting or a textured face while clipped.</div>
+<div class="callout tip"><span class="tag">Which to use?</span><strong>Soft</strong> looks better and covers the usual case: a scrolling list or panel of Images, UI Shapes and text. You can have as many Soft masks on screen as you like. Pick <strong>Simple</strong> for a <strong>mask inside another mask</strong>, a <strong>rotated</strong> mask, children with <strong>custom materials</strong> or third-party graphics, or TMP text that needs bevel, glow, lighting or a textured face while clipped.</div>
+<p>A shape is clipped by the <strong>nearest Soft mask above it</strong>. Nesting one Soft mask inside another clips against the inner one only, so content can spill past the outer mask; make the outer one <strong>Simple</strong> if you need both to clip.</p>
 
 <h3>What Soft Clips</h3>
 <ul>
@@ -558,7 +577,7 @@
     <tr><td><span class="field">Softness</span></td><td>Fades that side out over the distance you give it. Softening the top and bottom of a scrolling list is the classic use: rows dissolve at the edges, with no gradient overlay image. A side left at 0 keeps its crisp edge, and two soft sides meet cleanly in the corner between them.</td></tr>
   </tbody>
 </table>
-<p>Both belong to the shape itself, so they stay the same across button states and aren't saved into a style. From script they're <code>MaskPadding</code> and <code>MaskSoftness</code>.</p>
+<p>Both belong to the shape itself, so they stay the same across button states and aren't saved into a style. From script they're <code>MaskingPadding</code> and <code>MaskingSoftness</code>.</p>
 <p><span class="field">Maskable</span>, the last field in the module, works in every mode. Turn it off to stop a mask further up the hierarchy from clipping this shape, so a large shadow or glow can spill outside a masked parent. It controls whether this shape <em>is</em> clipped, not whether it clips others.</p>
 
 <h2 id="clicks">Clicks &amp; Raycasting</h2>
@@ -574,31 +593,62 @@
 <p>Hit-testing matches the shape you see, not its bounding rectangle. Rounded, squircle and octagonal corners, slant and taper are all accounted for, so a click just outside a corner falls through to whatever's behind. Drop shadow and glow aren't clickable.</p>
 <p>This applies to the shape itself only. Children keep their own pointer behavior, so turning <strong>Raycast Target</strong> off makes the shape click-through without affecting anything parented under it.</p>
 
-<h2 id="states">Button States</h2>
-<p>A UI Shape can restyle itself per Selectable state, with no sprite swaps.</p>
-<ol>
-  <li>Assign your Button (or any <code>Selectable</code>) to <strong>Selectable</strong>, or click <strong>Add Button</strong> / <strong>Add Toggle</strong> to add and assign one in a single step. UI Shapes then takes over the visuals: it sets that Selectable's <em>Transition</em> and <em>Navigation</em> to <strong>None</strong> and turns <strong>Raycast Target</strong> on. Switch Navigation back on if you need keyboard or controller support.</li>
-  <li>A row of tabs appears: <strong>Normal · Highlighted · Pressed · Selected · Disabled</strong>. Normal is the shape's main setup, and the others hold per-state overrides.</li>
-  <li>On a state tab, tick the checkbox next to any property you want to change there. Unticked properties follow Normal, and unticking one snaps it straight back, so there's nothing to reset by hand. A module's header checkbox is itself an override, which is how you switch an effect on or off for one state.</li>
-  <li>Set <strong>Transition Duration</strong> (next to the Selectable field) to cross-fade between states; 0 is instant. Fades use unscaled time, so they keep working while the game is paused.</li>
-</ol>
-<p>An <strong>orange bar</strong> in the left gutter marks every property, module header and tab that differs from Normal, like Unity's prefab override lines, so you can see what a state changes without opening it.</p>
-<p>The selected tab <em>is</em> the live preview: the element on screen shows that state while you edit it, and switching back to <strong>Normal</strong> shows the base look. Previews are never saved.</p>
-<p>State precedence matches Unity's Selectable: Disabled &gt; Pressed &gt; Selected &gt; Highlighted &gt; Normal.</p>
+<h2 id="states">Interactive Controls</h2>
+<p>A UI Shape can be the whole look of a Unity control, so a button, a slider or a dropdown needs no sprites at all. Point the <strong>Selectable</strong> field at a <strong>Button</strong>, <strong>Toggle</strong>, <strong>Slider</strong>, <strong>Scrollbar</strong>, <strong>Dropdown</strong> or <strong>Input Field</strong> and the shape takes over its visuals.</p>
+<p>They all work the same way: the shape restyles itself as you hover, press, check and disable the control, with no sprite swaps. <a href="#toggles">Control Types</a> below covers what's specific to each.</p>
 
-<h2 id="toggles">Toggles</h2>
-<p>Assign a <strong>Toggle</strong> as the Selectable (or click <strong>Add Toggle</strong>) and an <strong>Off | On</strong> bar appears above the state tabs, so every interaction state can be authored separately for the unchecked and checked toggle.</p>
-<ul>
-  <li><strong>Off</strong> is the ordinary state model: Off/Normal is the base look, and the other Off tabs override it.</li>
-  <li><strong>On/Normal</strong> is the checked resting look, a set of overrides on top of the base.</li>
-  <li>Each On state falls back to On/Normal, then to the matching Off state, then to the base. Say Off/Normal is dark gray and Off/Highlighted light gray: On/Highlighted starts out light gray. Set On/Normal's fill to green and On/Highlighted follows. Override On/Highlighted itself and it stops inheriting. The inspector always shows the resolved value.</li>
-  <li>Checking and unchecking cross-fade with the same <strong>Transition Duration</strong> as any other state change.</li>
-  <li>Changes from code, including <code>SetIsOnWithoutNotify</code> and <strong>Toggle Group</strong> (radio button) switching, are picked up automatically. There's nothing to call.</li>
-</ul>
-<h3>Checkmarks</h3>
-<p><strong>Add Toggle</strong> also creates a ready-made child <em>Checkmark</em> UI Shape, gray when off and green when on, driven by the same Toggle, so a fresh toggle works immediately. Restyle or delete it freely.</p>
-<p>That's the general pattern for shape checkmarks: give a child UI Shape the <em>same Toggle</em> as its Selectable and author its On/Off looks. Sharing the Selectable also makes the checkmark follow the parent's Highlighted, Pressed and Selected state across the whole parent, so hovering anywhere on the toggle lights the checkmark too (see <a href="#clicks">Raycast Mode</a>).</p>
-<div class="callout note"><span class="tag">Note</span>A UI Shape can't go in the Toggle's own <em>Graphic</em> field, because it isn't a uGUI Graphic. Use that field only if you'd rather have a plain Image checkmark that Unity fades for you.</div>
+<h3>Setting Up States</h3>
+<ol>
+  <li>Assign a <code>Selectable</code> to the <strong>Selectable</strong> field, or click <strong>Add...</strong> to add and assign one in a single step.</li>
+  <li>Tabs appear: <strong>Normal · Highlighted · Pressed · Selected · Disabled</strong>. Normal is the shape's main setup; the others override it.</li>
+  <li>On a state tab, tick the checkbox next to any property to change it there. Unticked properties follow Normal, and unticking one snaps it back. A module's header checkbox is an override too, so you can switch a whole effect on or off for one state.</li>
+  <li>Set <strong>Transition Duration</strong> to cross-fade between states. 0 is instant, and fades use unscaled time, so they keep running while the game is paused.</li>
+</ol>
+<p>The selected tab is also the live preview, and an <strong>orange bar</strong> in the left gutter marks everything that differs from Normal, like Unity's prefab override lines. Previews are never saved.</p>
+<p>Assigning a Selectable sets its <em>Transition</em> and <em>Navigation</em> to <strong>None</strong> and turns <strong>Raycast Target</strong> on. Switch Navigation back on if you need keyboard or controller support.</p>
+<p>Precedence matches Unity's: Disabled &gt; Pressed &gt; Selected &gt; Highlighted &gt; Normal.</p>
+
+<h3>Moving States</h3>
+<p>The <strong>Transform</strong> module lets a state move, turn and resize the shape, so a button can sink a little when pressed or grow under the pointer. It appears once a Selectable is assigned.</p>
+<table>
+  <thead><tr><th>Property</th><th>What it does</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Offset</strong></td><td>Moves the shape sideways and up or down, in canvas units.</td></tr>
+    <tr><td><strong>Rotation</strong></td><td>Turns the shape, in degrees.</td></tr>
+    <tr><td><strong>Scale</strong></td><td>Resizes the shape. 1 is its resting size, 1.05 is five percent bigger.</td></tr>
+  </tbody>
+</table>
+<p>All three are changes on top of the <strong>Rect Transform</strong>, not replacements for it, so you can move or lay out the shape later and every state still works. That's why they're read-only on the Normal tab: Normal is whatever the Rect Transform already holds. They cross-fade with the rest of the look over <strong>Transition Duration</strong>, and anything parented to the shape, like a button's label, moves with it.</p>
+<div class="callout note"><span class="tag">Limitation</span>Don't rotate a shape that uses <a href="#masking">Soft masking</a>. Switch that shape's Masking to <strong>Simple</strong> instead.</div>
+
+<h2 id="toggles">Control Types</h2>
+<p>Every control below drives its states through the same tabs. What changes is which parts you get to style, and where each one's states come from.</p>
+<p>A control's sub-parts, like a slider handle or a dropdown arrow, share the control's Selectable. They light up together with it, across its whole area, using the <a href="#clicks">Follow</a> raycast mode.</p>
+
+<h3>Button</h3>
+<p>The shape itself is the button. Nothing else to wire up.</p>
+
+<h3>Toggle</h3>
+<p>A Toggle adds an <strong>Off | On</strong> bar above the state tabs, so the unchecked and checked looks are authored separately. Off/Normal is the base; On/Normal is the checked resting look.</p>
+<p>An On state falls back to On/Normal, then to the matching Off state, then to the base, so you only override what actually differs when checked. Checking cross-fades with the same <strong>Transition Duration</strong>, including changes made from code or by a <strong>Toggle Group</strong>.</p>
+<p>Adding a Toggle also creates a child <em>Checkmark</em> shape driven by the same Toggle. That's the pattern for any shape checkmark: give the child the <em>same Toggle</em> as its Selectable and author its On and Off looks.</p>
+<div class="callout note"><span class="tag">Note</span>A UI Shape can't go in the Toggle's own <em>Graphic</em> field, because it isn't a uGUI Graphic. Use that field only for a plain Image checkmark that Unity fades for you.</div>
+
+<h3>Slider</h3>
+<p>The track, the <em>Fill</em> and the <em>Handle</em> are three separate shapes, each with its own effects and state looks. Style the handle on its own to make it stand out on hover.</p>
+
+<h3>Scrollbar</h3>
+<p>Same split as the Slider: a track shape and a <em>Handle</em> shape. Unity resizes the handle to match how much content fits, so leave its length to the Scrollbar and style the rest.</p>
+
+<h3>Dropdown</h3>
+<p>The closed control and the drop-down list are separate hierarchies. The list's <em>Template</em> and its <em>Viewport</em> are ordinary shapes, and each row carries its own Toggle, so a row has the full Off and On columns: On is the currently chosen option.</p>
+<div class="callout note"><span class="tag">Note</span>Hovering a row makes it <strong>Selected</strong>, not Highlighted, because TextMeshPro selects the row under the pointer. Put a row's hover look on the <strong>Selected</strong> tab.</div>
+
+<h3>Input Field</h3>
+<p>The shape is the text box. While the field has focus it sits in the <strong>Selected</strong> state, which is where a focus ring or a brighter outline goes.</p>
+
+<h3>Scroll View</h3>
+<p>A Scroll View has no Selectable of its own, so its background shape has no state tabs. Its scrollbars do, and its <em>Viewport</em> uses <a href="#masking">Soft masking</a>, so the corner radius you give the viewport is the shape the content clips to.</p>
 
 <h2 id="styles">Reusable Styles</h2>
 <p>Any tab, Normal or a state, can save its settings as a <strong>style asset</strong> and load them onto other shapes. The <strong>Style</strong> field at the top of each tab is the picker.</p>
@@ -610,29 +660,31 @@
   <li>Create an empty style with <strong>Assets ▸ Create ▸ UI Shapes ▸ Style</strong>.</li>
 </ul>
 <p>A style saved from <strong>Normal</strong> is a complete look, so loading it onto a state tab overrides every property there. A style saved from a <strong>state</strong> tab stores only that state's overrides. Load it onto another button and it changes just those properties, leaving the rest to follow that button's own Normal. That's what makes one shared hover or pressed style work across buttons that look nothing alike.</p>
-<p>Styles are an authoring convenience only. Nothing reads them at runtime, so they cost nothing in a build, and deleting a style asset never breaks one.</p>
+<p>Styles are an authoring tool. The link between a shape and its style is an editor one, so it costs nothing in a build and deleting a style asset never breaks a shape. To swap looks at runtime, keep a reference to the asset and call <code>shape.ApplyStyle(asset)</code>, which copies its settings across without changing the asset.</p>
 
 <h2 id="animation">Animation &amp; Scripting</h2>
 <p>Every setting is a plain serialized field, so the <strong>Animator</strong> can drive it directly: corner radius, colors, shadow distance, anything. Animated values sit <em>under</em> state overrides, so animation drives the base look and states override on top.</p>
-<p>From code, everything lives in the <code>PrizmGames.UIShapes</code> namespace:</p>
+<p>From code, every setting is a property in the <code>PrizmGames.UIShapes</code> namespace. Set one and the shape updates itself, with nothing else to call:</p>
 <pre><code>using PrizmGames.UIShapes;
 
 var shape = GetComponent&lt;UIShape&gt;();
-shape.CornerRadius   = 24f;          // properties push to the shader automatically
-shape.FillColor      = Color.white;
-shape.Glow           = true;
-shape.ShadowOpacity  = 0.6f;
-shape.SetBorderMode(UIShape.BorderMode.Round);
+shape.CornerRadius      = 24f;
+shape.FillColor         = Color.white;
+shape.Glow              = true;
+shape.DropShadowOpacity = 0.6f;
+shape.BorderMode        = BorderMode.Round;
+shape.CornerStyle       = CornerStyle.Squircle;
 
-shape.Progress       = true;         // radial timer
-shape.ProgressAmount = timeLeft / duration;</code></pre>
+shape.Progress          = true;      // radial timer
+shape.ProgressAmount    = timeLeft / duration;</code></pre>
+<p>Each property is named after the field it matches in the inspector, and your IDE shows the same description as the tooltip.</p>
+<p>From code you change how the shape looks <em>now</em>. The per-state looks a Selectable drives are authoring data: build those on the state tabs, or in a style asset, and they blend on top of whatever you set.</p>
+
+<h3>Cost of Setting Properties</h3>
+<p>Two things are free, so you can write the straightforward code:</p>
 <ul>
-  <li>PascalCase properties mirror the inspector fields (<code>CornerRadius</code>, <code>FillColor</code>, <code>ShadowRadius</code>, <code>TextureSprite</code>, <code>SkewAngle</code> and so on) and mark the shape dirty on write.</li>
-  <li>Fill's gradient is <code>FillGradient</code> (the mode), <code>FillGradientColors</code> (a standard <code>UnityEngine.Gradient</code>) and <code>FillGradientAngle</code>. Assigning <code>FillGradientColors</code> copies the gradient in, so the shape never shares your instance; if you instead mutate the returned gradient in place, call <code>shape.SetDirty()</code>.</li>
-  <li>The two-color effects use a trio each: <code>ShadowGradient</code>, <code>ShadowColor2</code>, <code>ShadowGradientAngle</code>, and likewise for <code>InnerShadow…</code>, <code>Glow…</code> and <code>Outline…</code>. The Texture tint follows the same pattern: <code>TextureColor</code>, <code>TextureGradient</code>, <code>TextureColor2</code>, <code>TextureGradientAngle</code>, plus <code>TextureGrayscale</code>.</li>
-  <li>Enum settings use a <code>Set…</code> method instead of a property (<code>SetCornerStyle</code>, <code>SetBorderMode</code>, <code>SetSkewAxis</code>, <code>SetSkewMode</code>, <code>SetTextureFit</code>, <code>SetProgressMethod</code>, <code>SetProgressOrigin</code>, <code>SetProgressTargets</code>), because a property would collide with the enum's own name.</li>
-  <li><code>shape.CurrentState</code> reads the active state. <code>shape.GetStyle(state)</code> returns an Off-column override block, and <code>shape.GetOnStyle(state)</code> the checked column's.</li>
-  <li>If you set the public camelCase <em>fields</em> directly, call <code>shape.SetDirty()</code> afterwards.</li>
+  <li><strong>Setting a value the shape already has does nothing.</strong> Assigning the same color every frame costs nothing, so you don't need to check first.</li>
+  <li><strong>Setting many properties in one frame costs no more than setting one.</strong> The shape redraws once, after your code has finished.</li>
 </ul>
 
 <h2 id="performance">Performance &amp; Platforms</h2>
@@ -670,10 +722,13 @@ shape.ProgressAmount = timeLeft / duration;</code></pre>
   <div class="bar"><span class="lbl">Fill</span><span class="track"><span class="val" style="width:5%;background:#35b46a"></span></span><span class="note"></span></div>
   <div class="bar"><span class="lbl">Soft mask (per child)</span><span class="track"><span class="val" style="width:5%;background:#35b46a"></span></span><span class="note"></span></div>
   <div class="bar"><span class="lbl">Outline</span><span class="track"><span class="val" style="width:4%;background:#35b46a"></span></span><span class="note"></span></div>
-  <div class="bar"><span class="lbl">Glow</span><span class="track"><span class="val" style="width:3%;background:#35b46a"></span></span><span class="note">scales with Radius</span></div>
+  <div class="bar"><span class="lbl">Glow</span><span class="track"><span class="val" style="width:2%;background:#35b46a"></span></span><span class="note">scales with Radius</span></div>
   <div class="bar"><span class="lbl">Progress</span><span class="track"><span class="val" style="width:2%;background:#35b46a"></span></span><span class="note">no extra quad</span></div>
 </div>
-<p><strong>Bevel</strong> is the heaviest of the ordinary effects, because it draws two quads: a highlight and a shadow. The three soft effects, <strong>Drop Shadow</strong>, <strong>Inner Shadow</strong> and <strong>Glow</strong>, cost in proportion to their Radius, so read them as one band rather than a ranking. A big glow easily outweighs a small drop shadow. Everything below Bevel is cheap enough to use freely at ordinary button and card sizes, even on mobile.</p>
+<p><strong>Bevel</strong> is the heaviest of the ordinary effects, because it draws two quads: a highlight and a shadow. <strong>Drop Shadow</strong> and <strong>Inner Shadow</strong> cost in proportion to their Radius, so read them as one band rather than a ranking. <strong>Glow</strong> is the cheapest of the soft effects: per pixel it costs about the same as a plain Fill, though it still covers more ground as its Radius grows. Everything below Bevel is cheap enough to use freely at ordinary button and card sizes, even on mobile.</p>
+
+<h3>Skewed Shapes</h3>
+<p>Slanting a shape roughly doubles what its effects cost to draw, because each one has to work out where the slanted edges and corners really are. It stays a multiplier on the small numbers in the chart above, so slanted buttons and banners are fine anywhere, and only the shapes with Skew switched on pay it.</p>
 
 <h3>Budgeting Background Blur</h3>
 <p>Blur is the one effect that can dominate a mobile frame. On PC and console it's free in practice, but on a mobile-class GPU, Switch included, a large panel can cost more than every other effect combined. Your levers, in order of impact:</p>
@@ -738,7 +793,7 @@ shape.ProgressAmount = timeLeft / duration;</code></pre>
 <p>For a bug report, please include your Unity version, the render pipeline you're using (Built-in, URP or HDRP), the UI Shapes version, and the steps to reproduce the problem. A screenshot or a small repro scene helps a lot.</p>
 
 <footer class="doc">
-  © PRIZM GAMES · UI Shapes v1.1.2 · Support: <a href="mailto:support@prizmgames.net">support@prizmgames.net</a>
+  © PRIZM GAMES
 </footer>
 
 </div>
