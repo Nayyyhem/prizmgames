@@ -229,7 +229,7 @@
 
 <header class="doc">
   <h1>UI Shapes</h1>
-  <div class="sub"><span class="badge">v1.3.0</span> Manual</div>
+  <div class="sub"><span class="badge">v1.3.1</span> Manual</div>
 </header>
 
 <p class="lede">One component for Unity UI. Add a <code>UIShape</code> to any UI element and you get rounded, squircle, octagonal or slanted shapes with fill, gradients, textures, drop shadow, inner shadow, glow, outline, bevel and background blur, plus soft masking, progress wipes and per-state button styling. No sprites, no 9-slices, no render textures. Everything stays crisp at any resolution.</p>
@@ -346,12 +346,13 @@
         <div class="demo"><span class="sw skew-mir"></span><span class="cap">Mirrored</span></div>
         <div class="demo"><span class="sw skew-cus"></span><span class="cap">Custom</span></div>
       </div></td></tr>
+    <tr><td><span class="field">Even Effect Width</span></td><td>Off by default. Off, the effects slant along with the shape, so an outline gets thicker on some edges and thinner on others, exactly the way italic text slants its own strokes. Turn it on to keep outlines, shadows and glows the same thickness all the way around instead. It costs noticeably more to draw: see <a href="#performance">Performance &amp; Platforms</a>.</td></tr>
   </tbody>
 </table>
 <p>The module has its own on/off switch, so you can keep an angle set and switch the slant per button state, where it fades in and out smoothly.</p>
 <p>A trapezoid narrows as the angle grows and stops before the edges cross, settling into a clean triangle. How steep you can go depends on the element's proportions: a tall element takes a much steeper angle than a short one.</p>
 <p>Soft masks, Background Blur and click detection all follow the slanted outline.</p>
-<p>Slanted shapes cost more to draw than upright ones. It only matters on mobile and Switch, and only on effect-heavy screens: see <a href="#performance">Performance &amp; Platforms</a>.</p>
+<p>A slanted shape costs the same as an upright one to draw, unless you turn <span class="field">Even Effect Width</span> on: see <a href="#performance">Performance &amp; Platforms</a>.</p>
 <div class="callout note"><span class="tag">Limitation</span>Soft masking a <em>skewed</em> shape assumes the mask and its canvas aren't rotated.</div>
 
 <h2 id="common">Common Controls</h2>
@@ -470,7 +471,7 @@
   <thead><tr><th>Field</th><th>What it does</th></tr></thead>
   <tbody>
     <tr><td><span class="field">Placement</span></td><td>Inside, Outside or Centered on the edge.</td></tr>
-    <tr><td><span class="field">Width</span></td><td>Stroke thickness. It stays even on skewed shapes.</td></tr>
+    <tr><td><span class="field">Width</span></td><td>Stroke thickness. On a slanted shape it slants too, unless you turn on <span class="field">Even Effect Width</span> in the Skew module.</td></tr>
     <tr><td><span class="field">Softness</span></td><td>0 for a crisp stroke, higher to feather it.</td></tr>
     <tr><td><span class="field">Distance</span></td><td>Pushes the stroke further out, for a detached ring.</td></tr>
   </tbody>
@@ -737,8 +738,8 @@ shape.ProgressAmount    = timeLeft / duration;</code></pre>
   <div class="bar"><span class="lbl">Background Blur (High)</span><span class="track"><span class="val" style="width:50%;background:#e8973a"></span></span><span class="note"></span></div>
   <div class="bar"><span class="lbl">Background Blur (Medium)</span><span class="track"><span class="val" style="width:25%;background:#b3a52f"></span></span><span class="note"></span></div>
   <div class="bar"><span class="lbl">Bevel</span><span class="track"><span class="val" style="width:17%;background:#9cbb35"></span></span><span class="note">draws twice</span></div>
+  <div class="bar"><span class="lbl">Inner Shadow</span><span class="track"><span class="val" style="width:12%;background:#6cb33f"></span></span><span class="note">scales with Radius</span></div>
   <div class="bar"><span class="lbl">Background Blur (Low)</span><span class="track"><span class="val" style="width:9%;background:#6cb33f"></span></span><span class="note">still reads as blur</span></div>
-  <div class="bar"><span class="lbl">Inner Shadow</span><span class="track"><span class="val" style="width:9%;background:#6cb33f"></span></span><span class="note">scales with Radius</span></div>
   <div class="bar"><span class="lbl">Texture</span><span class="track"><span class="val" style="width:7%;background:#6cb33f"></span></span><span class="note"></span></div>
   <div class="bar"><span class="lbl">Drop Shadow</span><span class="track"><span class="val" style="width:7%;background:#6cb33f"></span></span><span class="note">scales with Radius</span></div>
   <div class="bar"><span class="lbl">Fill</span><span class="track"><span class="val" style="width:5%;background:#35b46a"></span></span><span class="note"></span></div>
@@ -747,10 +748,17 @@ shape.ProgressAmount    = timeLeft / duration;</code></pre>
   <div class="bar"><span class="lbl">Glow</span><span class="track"><span class="val" style="width:2%;background:#35b46a"></span></span><span class="note">scales with Radius</span></div>
   <div class="bar"><span class="lbl">Progress</span><span class="track"><span class="val" style="width:2%;background:#35b46a"></span></span><span class="note">no extra quad</span></div>
 </div>
-<p><strong>Bevel</strong> is the heaviest of the ordinary effects, because it draws two quads: a highlight and a shadow. <strong>Drop Shadow</strong> and <strong>Inner Shadow</strong> cost in proportion to their Radius, so read them as one band rather than a ranking. <strong>Glow</strong> is the cheapest of the soft effects: per pixel it costs about the same as a plain Fill, though it still covers more ground as its Radius grows. Everything below Bevel is cheap enough to use freely at ordinary button and card sizes, even on mobile.</p>
+<p><strong>Bevel</strong> is the heaviest of the ordinary effects, because it draws two quads: a highlight and a shadow. <strong>Drop Shadow</strong> and <strong>Inner Shadow</strong> cost in proportion to their Radius, so read them as one band rather than a ranking. A shape with both <strong>Fill</strong> and <strong>Inner Shadow</strong> costs less than the two bars added together, because the two are drawn as one. <strong>Glow</strong> is the cheapest of the soft effects: per pixel it costs about the same as a plain Fill, though it still covers more ground as its Radius grows. Everything below Bevel is cheap enough to use freely at ordinary button and card sizes, even on mobile.</p>
 
 <h3>Skewed Shapes</h3>
-<p>Slanting a shape roughly doubles what its effects cost to draw, because each one has to work out where the slanted edges and corners really are. It stays a multiplier on the small numbers in the chart above, so slanted buttons and banners are fine anywhere, and only the shapes with Skew switched on pay it.</p>
+<p>Slanting a shape is free. The slant is built into the shape's geometry, so it draws at the same cost as the upright version and the chart above applies to it unchanged.</p>
+<div class="bars">
+  <div class="bar"><span class="lbl">No Effects</span><span class="track"><span class="val" style="width:1%;background:#35b46a"></span></span><span class="note"></span></div>
+  <div class="bar"><span class="lbl">All Effects</span><span class="track"><span class="val" style="width:18%;background:#6cb33f"></span></span><span class="note"></span></div>
+  <div class="bar"><span class="lbl">All Effects + Even Effect Width</span><span class="track"><span class="val" style="width:100%;background:#e96041"></span></span><span class="note"></span></div>
+</div>
+<div class="callout warn"><span class="tag">Even Effect Width</span>When enabled every pixel then has to work out where the slanted edges and corners really are. Expect three to six times the shape's usual cost, depending on which effects it carries.<p>Leave it off on effect-heavy mobile and Switch screens, and on any shape whose slant is gentle enough that you can't see the difference.</p></div>
+<p>A <strong>Mirrored</strong> or <strong>Custom</strong> slant costs a little even with the setting off, because the shape narrows across its width. A <strong>Parallel</strong> slant is free either way.</p>
 
 <h3>Budgeting Background Blur</h3>
 <p>Blur is the one effect that can dominate a mobile frame. On PC and console it's free in practice, but on a mobile-class GPU, Switch included, a large panel can cost more than every other effect combined. Your levers, in order of impact:</p>
