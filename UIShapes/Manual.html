@@ -229,7 +229,7 @@
 
 <header class="doc">
   <h1>UI Shapes</h1>
-  <div class="sub"><span class="badge">v1.3.1</span> Manual</div>
+  <div class="sub"><span class="badge">v1.3.2</span> Manual</div>
 </header>
 
 <p class="lede">One component for Unity UI. Add a <code>UIShape</code> to any UI element and you get rounded, squircle, octagonal or slanted shapes with fill, gradients, textures, drop shadow, inner shadow, glow, outline, bevel and background blur, plus soft masking, progress wipes and per-state button styling. No sprites, no 9-slices, no render textures. Everything stays crisp at any resolution.</p>
@@ -412,7 +412,20 @@
 </table>
 <p>Every fit works from the sprite's full authored size, including any transparent border, so artwork sitting off to one side keeps its intended aspect and position. A sprite packed into a trimmed Sprite Atlas is the exception: the border no longer exists there, so the fit uses the trimmed artwork. Set the sprite to <em>Mesh Type: Full Rect</em> if you need the border preserved in an atlas.</p>
 <p>Textures always render upright. They never shear with a skewed shape, though the silhouette still clips them. The tint gradient does follow the shape, so it stays aligned with the fill's gradient.</p>
-<p>Every Texture field animates and can be overridden per state, so a state can swap the sprite, the fit, the tint or the opacity. <span class="field">Grayscale</span> is on or off rather than an amount, so it switches at the start of a state transition instead of fading across it, like <span class="field">Texture Fit</span> and the blend modes.</p>
+<p>Every Texture field animates and can be overridden per state, so a state can swap the sprite, the fit, the tint or the opacity. <span class="field">Grayscale</span> is on or off rather than an amount, so it switches at the start of a state transition instead of fading across it, like <span class="field">Texture Fit</span> and the blend modes. The two fields below are the exception: they apply to the whole shape rather than per state, so you'll find them on the Normal tab only.</p>
+
+<h3>Effects That Follow the Picture</h3>
+<p>Cut-out artwork, an icon, a character or a logo on a see-through background, usually wants its shadow and its outline around the picture, not around the rect it sits in. Tick <span class="field">Use Texture Outline for Effects</span> and they do.</p>
+<table>
+  <thead><tr><th>Field</th><th>What it does</th></tr></thead>
+  <tbody>
+    <tr><td><span class="field">Use Texture Outline for Effects</span></td><td>Outline, Drop Shadow, Glow, Inner Shadow and Bevel trace the sprite's own shape.</td></tr>
+    <tr><td><span class="field">Targets</span></td><td>Which of the five follow. The rest keep the shape's outline.</td></tr>
+  </tbody>
+</table>
+<p>Every effect keeps all of its settings. Width, Placement, Radius, Distance, Spread, colors and blend modes all behave exactly as they do on a plain shape.</p>
+<p>The tick appears once you assign a sprite, and it turns itself on the first time you assign one with a see-through background to a shape that has no Fill. Turn it off any time; it stays off after that.</p>
+<div class="callout note"><span class="tag">Two limits</span>Following isn't available on a slanted shape, or with <strong>Constant Size</strong>, where the sprite tiles and there's no single outline to follow. The tick is hidden in both cases.</div>
 
 <h2 id="dropshadow">Drop Shadow</h2>
 <p>A soft shadow behind the element.</p>
@@ -629,6 +642,7 @@
 <h2 id="toggles">Control Types</h2>
 <p>Every control below drives its states through the same tabs. What changes is which parts you get to style, and where each one's states come from.</p>
 <p>A control's sub-parts, like a slider handle or a dropdown arrow, share the control's Selectable. They light up together with it, across its whole area, using the <a href="#clicks">Follow</a> raycast mode.</p>
+<p>This works in your own layouts too. Give several shapes the same Selectable, such as a background and a separate icon, and they change state together across the whole button. It holds even when the Selectable sits on a plain parent object rather than on a UI Shape, which is common when a button prefab keeps its <strong>Button</strong> on an empty root.</p>
 
 <h3>Button</h3>
 <p>The shape itself is the button. Nothing else to wire up.</p>
