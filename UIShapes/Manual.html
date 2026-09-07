@@ -229,7 +229,7 @@
 
 <header class="doc">
   <h1>UI Shapes</h1>
-  <div class="sub"><span class="badge">v1.3.2</span> Manual</div>
+  <div class="sub"><span class="badge">v1.3.4</span> Manual</div>
 </header>
 
 <p class="lede">One component for Unity UI. Add a <code>UIShape</code> to any UI element and you get rounded, squircle, octagonal or slanted shapes with fill, gradients, textures, drop shadow, inner shadow, glow, outline, bevel and background blur, plus soft masking, progress wipes and per-state button styling. No sprites, no 9-slices, no render textures. Everything stays crisp at any resolution.</p>
@@ -532,7 +532,7 @@
   <thead><tr><th>Pipeline</th><th>Setup</th></tr></thead>
   <tbody>
     <tr><td><strong>Built-in</strong></td><td>Works out of the box, and is the only pipeline that also blurs UI behind the panel, including elements on the same canvas.</td></tr>
-    <tr><td><strong>URP</strong></td><td>One-time setup: select your URP Renderer asset (under your URP Asset's <em>Renderer List</em>) and add the Renderer Feature <strong>UI Shapes Background Blur Feature</strong>. Until you do, blur panels stay invisible and the inspector shows a reminder. The feature costs nothing on frames with no blur panel, so it's safe to leave installed. Its <span class="field">Capture Resolution</span> (default Half) is a second mobile lever, covered under <a href="#performance">Performance &amp; Platforms</a>.</td></tr>
+    <tr><td><strong>URP</strong></td><td>One-time setup: press <strong>Fix</strong> on the reminder in the Background Blur module, and UI Shapes adds the Renderer Feature <strong>UI Shapes Background Blur Feature</strong> to the default renderer of your active URP Asset. To do it by hand, select your URP Renderer asset (under your URP Asset's <em>Renderer List</em>) and add that feature there. Until the feature is in place, blur panels stay invisible. The feature costs nothing on frames with no blur panel, so it's safe to leave installed. Its <span class="field">Capture Resolution</span> (default Half) is a second mobile lever, covered under <a href="#performance">Performance &amp; Platforms</a>.</td></tr>
     <tr><td><strong>HDRP</strong></td><td>No setup. It's handled automatically.</td></tr>
   </tbody>
 </table>
