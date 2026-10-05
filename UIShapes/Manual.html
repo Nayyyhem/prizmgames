@@ -253,7 +253,7 @@
 
 <header class="doc">
   <h1>UI Shapes</h1>
-  <div class="sub"><span class="badge">v1.5.0</span> Manual</div>
+  <div class="sub"><span class="badge">v1.5.1</span> Manual</div>
 </header>
 
 <p class="lede">One component for Unity UI. Add a <code>UIShape</code> to any UI element and you get rounded, squircle, octagonal or slanted shapes with fill, gradients, textures, drop shadow, inner shadow, glow, outline, bevel and background blur, plus soft masking, progress wipes and per-state button styling. No sprites, no 9-slices, no render textures. Everything stays crisp at any resolution.</p>
@@ -371,7 +371,7 @@
 <table>
   <thead><tr><th>Field</th><th>What it does</th></tr></thead>
   <tbody>
-    <tr><td><span class="field">Corner Style</span></td><td><strong>Sharp</strong> (default) is a plain rectangle, and hides the radius controls since they don't apply. <strong>Rounded</strong> gives circular corner arcs. <strong>Octagonal</strong> cuts each corner off as a straight 45° chamfer. <strong>Squircle</strong> gives superellipse arcs, the continuous corner familiar from iOS and Figma, with Squareness setting how square they are.
+    <tr><td><span class="field">Corner Style</span></td><td><strong>Sharp</strong> (default) is a plain rectangle, and hides the radius controls since they don't apply. <strong>Rounded</strong> gives round corners that flow smoothly out of the straight edges. <strong>Octagonal</strong> cuts each corner off as a straight 45° chamfer. <strong>Squircle</strong> gives superellipse arcs, the continuous corner familiar from iOS and Figma, with Squareness setting how square they are.
       <div class="demos">
         <div class="demo"><span class="sw sharp"></span><span class="cap">Sharp</span></div>
         <div class="demo"><span class="sw"></span><span class="cap">Rounded</span></div>
@@ -413,22 +413,21 @@
 <div class="callout note"><span class="tag">Limitation</span>Soft masking a <em>skewed</em> shape assumes the mask and its canvas aren't rotated.</div>
 
 <h3 id="common">Common Effect Settings</h3>
-<p>These four settings appear on most effect modules. Each effect section below says which of them it has, then lists its own specific fields.</p>
+<p>These three settings appear on most effect modules. Each effect section below says which of them it has, then lists its own specific fields.</p>
 <table>
   <thead><tr><th>Field</th><th>What it does</th></tr></thead>
   <tbody>
     <tr><td><span class="field">Color Mode</span></td><td>Whether the effect uses a <strong>Single Color</strong> or a gradient. See below.</td></tr>
     <tr><td><span class="field">Opacity</span></td><td>0 to 1, fading that effect alone. Layers on top of the color's own alpha.</td></tr>
     <tr><td><span class="field">Blend Mode</span></td><td>How the effect composites over what's beneath it. <strong>Normal</strong> covers, <strong>Additive</strong> brightens (good for glows and bevel highlights), and <strong>Multiply</strong> darkens (good for bevel shadows and tinted overlays).</td></tr>
-    <tr><td><span class="field">Intensity</span></td><td>0.1 to 10, an alpha multiplier. Values above 1 make a soft effect's core denser without making it any bigger, which is the difference between a faint haze and a solid core at the same radius. Only the three soft effects have it.</td></tr>
   </tbody>
 </table>
+<div class="callout note"><span class="tag">Note</span>Two settings add a draw call. A <strong>Multiply</strong> blend renders separately from Normal and Additive, and an <span class="field">Axis</span> other than 0 renders separately from the same effect without one. Each is a small cost, and Multiply is worth it for the classic bevel look.</div>
 <h4>Gradients</h4>
 <p>Wherever <strong>Color Mode</strong> offers a gradient, the choices are <strong>Vertical</strong> (top to bottom), <strong>Horizontal</strong> (left to right), or <strong>Custom Angle</strong>, which adds an <span class="field">Angle</span> slider (0° puts the end color on the right, 90° on top).</p>
 <p><strong>Fill</strong> uses Unity's own gradient editor: click the <span class="field">Gradient</span> field and add as many color and alpha stops as you like, anywhere along the ramp. Set the gradient's own mode to <strong>Fixed</strong> for hard-edged bands instead of a smooth blend. Every other effect (Texture, Drop Shadow, Inner Shadow, Glow, Outline) keeps a simpler start and end color, which is what those effects are normally used for.</p>
 <p>Colors carry alpha, so a transparent stop gives a clean fade-out, and alpha stops can sit at different positions from the color stops. Colors blend the way they do in Photoshop, Figma and CSS. Gradients cost nothing extra to draw, and state transitions cross-fade them, including between a single color and a gradient, or between two gradients with different numbers of stops.</p>
 <div class="callout note"><span class="tag">Note</span>The Animator can key an effect's <span class="field">Color</span> (in Single Color mode) but not a Gradient, which Unity's animation system cannot handle. To animate a Fill gradient, put the gradients on button states and let the state transition cross-fade them, or swap them from a script.</div>
-<div class="callout note"><span class="tag">Note</span>Multiply-blended effects render in a separate draw call from Normal and Additive ones. It's a small cost, and worth it for the classic bevel look, but it's the one blend mode with a performance side.</div>
 
 <h3 id="fill">Fill</h3>
 <p>The shape's interior, as a single color or a multi-stop gradient.</p>
@@ -437,7 +436,7 @@
   <div class="demo"><span class="sw grad"></span><span class="cap">Two stops</span></div>
   <div class="demo"><span class="sw grad-multi"></span><span class="cap">Multi-stop</span></div>
 </div>
-<p><em>Common settings:</em> Color Mode and Opacity. Fill has no blend mode or intensity of its own, since it's the bottom layer everything else composites over. Textures are a separate module, covered next.</p>
+<p><em>Common settings:</em> Color Mode and Opacity. Fill has no blend mode of its own, since it's the bottom layer everything else composites over. Textures are a separate module, covered next.</p>
 
 <h3 id="texture">Texture</h3>
 <p>A sprite drawn on top of the Fill and clipped to the shape's corners. It has its own on/off switch, so you can use it with Fill off. With no sprite assigned it draws a plain white rect, which the tint turns into a flat colored layer.</p>
@@ -492,7 +491,7 @@
 <div class="demos">
   <div class="demo"><span class="plate"><span class="sw dropshadow"></span></span><span class="cap">Drop Shadow</span></div>
 </div>
-<p><em>Common settings:</em> Color Mode, Opacity, Blend Mode and Intensity.</p>
+<p><em>Common settings:</em> Color Mode, Opacity and Blend Mode.</p>
 <table>
   <thead><tr><th>Field</th><th>What it does</th></tr></thead>
   <tbody>
@@ -500,6 +499,8 @@
     <tr><td><span class="field">Distance</span></td><td>How far the shadow is offset from the shape.</td></tr>
     <tr><td><span class="field">Angle</span></td><td>Which way it's offset. 0° is right, 90° is up.</td></tr>
     <tr><td><span class="field">Spread</span></td><td>Grows or shrinks the shadow before blurring.</td></tr>
+    <tr><td><span class="field">Intensity</span></td><td>0.1 to 10. Values above 1 make the shadow denser without making it bigger.</td></tr>
+    <tr><td><span class="field">Axis</span></td><td>-1 to 1. Limits the shadow to one axis: toward <strong>X</strong> only left and right, toward <strong>Y</strong> only above and below.</td></tr>
   </tbody>
 </table>
 <p>The shadow is cut out of the shape's interior, so a semi-transparent glass panel never shows its own shadow through itself.</p>
@@ -509,7 +510,7 @@
 <div class="demos">
   <div class="demo"><span class="sw innershadow"></span><span class="cap">Inner Shadow</span></div>
 </div>
-<p><em>Common settings:</em> Color Mode, Opacity, Blend Mode and Intensity.</p>
+<p><em>Common settings:</em> Color Mode, Opacity and Blend Mode.</p>
 <table>
   <thead><tr><th>Field</th><th>What it does</th></tr></thead>
   <tbody>
@@ -517,6 +518,8 @@
     <tr><td><span class="field">Distance</span></td><td>How far the shadow is offset inside the shape.</td></tr>
     <tr><td><span class="field">Angle</span></td><td>Which way it's offset. 0° is right, 90° is up.</td></tr>
     <tr><td><span class="field">Spread</span></td><td>Positive values thicken the shadow on all sides.</td></tr>
+    <tr><td><span class="field">Intensity</span></td><td>0.1 to 10. Values above 1 make the shadow denser without making it thicker.</td></tr>
+    <tr><td><span class="field">Axis</span></td><td>-1 to 1. Limits the shadow to one axis: toward <strong>X</strong> only the left and right edges, toward <strong>Y</strong> only the top and bottom.</td></tr>
   </tbody>
 </table>
 
@@ -525,12 +528,14 @@
 <div class="demos">
   <div class="demo"><span class="sw glow"></span><span class="cap">Glow</span></div>
 </div>
-<p><em>Common settings:</em> Color Mode, Opacity, Blend Mode and Intensity.</p>
+<p><em>Common settings:</em> Color Mode, Opacity and Blend Mode.</p>
 <table>
   <thead><tr><th>Field</th><th>What it does</th></tr></thead>
   <tbody>
     <tr><td><span class="field">Radius</span></td><td>How far the glow reaches out from the shape.</td></tr>
     <tr><td><span class="field">Spread</span></td><td>Pushes the whole halo out from the shape, or pulls it in, without changing how soft it is.</td></tr>
+    <tr><td><span class="field">Intensity</span></td><td>0.1 to 10. Values above 1 make the glow denser without making it reach further.</td></tr>
+    <tr><td><span class="field">Axis</span></td><td>-1 to 1. Limits the glow to one axis: toward <strong>X</strong> only left and right, toward <strong>Y</strong> only above and below.</td></tr>
   </tbody>
 </table>
 
@@ -539,7 +544,7 @@
 <div class="demos">
   <div class="demo"><span class="sw outline"></span><span class="cap">Outline</span></div>
 </div>
-<p><em>Common settings:</em> Color Mode, Opacity and Blend Mode. The outline is a hard-edged effect, so it has no intensity.</p>
+<p><em>Common settings:</em> Color Mode, Opacity and Blend Mode.</p>
 <table>
   <thead><tr><th>Field</th><th>What it does</th></tr></thead>
   <tbody>
@@ -578,13 +583,14 @@
   <div class="demo"><span class="sw box"><i></i></span><span class="cap">Background</span></div>
   <div class="demo"><span class="sw box"><i class="blur"></i></span><span class="cap">Behind the panel</span></div>
 </div>
-<p>Blur has none of the common settings. Its three settings are its own, and the tint comes from the Fill module underneath.</p>
+<p>Blur has none of the common settings. Its four settings are its own, and the tint comes from the Fill module underneath.</p>
 <table>
   <thead><tr><th>Field</th><th>What it does</th></tr></thead>
   <tbody>
     <tr><td><span class="field">Radius</span></td><td>Blur strength.</td></tr>
     <tr><td><span class="field">Blur Opacity</span></td><td>Mixes between the sharp and the blurred background. 1 is fully blurred. This is a mix, not a fade to transparent, so lowering it lets the sharp background show through rather than making the panel see-through.</td></tr>
-    <tr><td><span class="field">Quality</span></td><td>The blur's sample count: High (32 taps), Medium (16) or Low (8). Lower counts cost proportionally less and stay smooth even at large radii. On busy, high-contrast backdrops the lower settings can look very slightly softer, which is usually invisible in context. This is your main lever on mobile, so see <a href="#performance">Performance &amp; Platforms</a> before shipping.</td></tr>
+    <tr><td><span class="field">Quality</span></td><td>The blur's sample count: High (32 taps), Medium (16) or Low (8). Lower settings cost less and look grainier, most visibly on busy, high-contrast backgrounds. This is your main lever on mobile, so see <a href="#performance">Performance &amp; Platforms</a> before shipping.</td></tr>
+    <tr><td><span class="field">Filter</span></td><td><strong>Smooth</strong> shows less grain, but a moving background can ripple behind it. <strong>Stable</strong> (default) stays steady. Pick Smooth for panels over a still background, such as a pause menu, and Stable over gameplay or a moving camera. Both cost the same. URP and HDRP only, so the Built-in pipeline doesn't show it.</td></tr>
   </tbody>
 </table>
 <h5>Setup Per Pipeline</h5>
@@ -921,7 +927,7 @@ shape.GetStateEnter(VisualState.Normal, isOn: true).AddListener(OnChecked);</cod
 <h4>Budgeting Background Blur</h4>
 <p>Blur is the one effect that can dominate a mobile frame. On PC and console it's free in practice, but on a mobile-class GPU, Switch included, a large panel can cost more than every other effect combined. Your levers, in order of impact:</p>
 <ul>
-  <li><strong>Quality</strong>, per shape. High costs several times Medium, and Medium a few times Low. Both Medium and Low still read as a proper blur, so start at Low or Medium on mobile and raise it only if you can see the difference in context.</li>
+  <li><strong>Quality</strong>, per shape. Each step up costs nearly twice the one below. Both Medium and Low still read as a proper blur, so start at Low or Medium on mobile and raise it only if you can see the difference in context.</li>
   <li><strong>Capture Resolution</strong> on URP's Renderer Feature. Half looks all but identical to Full, and Quarter is cheaper still and fine for large radii.</li>
   <li>The panel's <strong>on-screen size</strong>. Prefer a few large panels over many small ones.</li>
 </ul>
